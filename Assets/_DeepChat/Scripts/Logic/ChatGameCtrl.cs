@@ -13,16 +13,27 @@ namespace _DeepChat.Scripts.Logic
 {
     public class ChatGameCtrl : MonoBehaviour
     {
-        [SerializeField] private MessageListViewCtrl messages;
+        [Header("Components")] [SerializeField]
+        private MessageListViewCtrl messages;
+
         [SerializeField] private EmoticonListViewCtrl emoticons;
         [SerializeField] private Button sendButton;
+        [SerializeField] private ScoreViewCtrl score;
+
+        [Header("Data")] [SerializeField] private GameRule gameRule;
 
         [SerializeField] private EmoticonBank playerEmoticonBank;
-        [SerializeField] private float npcMessageSpan = 5.0f;
+
+        // [SerializeField] private float npcMessageSpan = 5.0f;
         [SerializeField] private MessageBank npcMessageBank;
-        [SerializeField] private bool runOnStart;
+
+        [Header("Config")] [SerializeField] private bool runOnStart;
 
         private bool _isRunning;
+
+        private int _score;
+
+        private bool _npcMessageTimeout;
 
         private void Awake()
         {
@@ -40,16 +51,21 @@ namespace _DeepChat.Scripts.Logic
         {
             _isRunning = true;
 
-            emoticons.SetEmoticons(playerEmoticonBank.emoticons);
-
-            var wait = new WaitForSeconds(npcMessageSpan);
             while (_isRunning)
             {
-                yield return wait;
                 var index = Random.Range(0, npcMessageBank.messages.Count);
                 var message = npcMessageBank.messages[index];
                 messages.Append(ActorType.Npc, message);
+                emoticons.SetEmoticons(playerEmoticonBank.emoticons);
+                yield return new WaitUntil(() => _npcMessageTimeout);
+                _npcMessageTimeout = false;
             }
+        }
+
+        [Button(enabledMode: EButtonEnableMode.Playmode)]
+        private void NextNpcMessage()
+        {
+            _npcMessageTimeout = true;
         }
 
         [Button, ShowIf("_isRunning")]
@@ -65,6 +81,13 @@ namespace _DeepChat.Scripts.Logic
             var message = string.Concat(selectedEmoticons.Select(e => e.content));
             messages.Append(ActorType.Player, message);
             emoticons.SetEmoticons(playerEmoticonBank.emoticons);
+
+            var diff = messages.GetDifferenceAgainstTarget();
+            Debug.Log($"Difference against target width: {diff:F2}");
+            var dist = Mathf.Abs(diff);
+            var scoreChange = gameRule.GetScoreChange(dist);
+            _score += scoreChange;
+            score.UpdateScore(_score);
         }
     }
 }

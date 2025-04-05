@@ -15,6 +15,12 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         private readonly List<EmoticonViewCtrl> _emoticons = new();
 
+        private void Awake()
+        {
+            if (clearOnAwake)
+                Clear();
+        }
+
         public IEnumerable<Emoticon> GetSelectedEmoticons()
         {
             return _emoticons.Where(v => v.IsChecked()).Select(v => v.Content);

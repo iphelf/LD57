@@ -13,6 +13,8 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private Transform listRoot;
         [SerializeField] private GameObject playerMessagePrefab;
         [SerializeField] private GameObject npcMessagePrefab;
+        [SerializeField] private LayoutGroup targetReference;
+        [SerializeField] private float targetWidthCorrection;
 
         [SerializeField, ReadOnly] private List<MessageViewCtrl> messages;
 
@@ -33,6 +35,19 @@ namespace _DeepChat.Scripts.ViewCtrls
             messages.Add(messageViewCtrl);
             scrollRect.normalizedPosition = new Vector2(0, 0);
             Canvas.ForceUpdateCanvases();
+        }
+
+        public float GetDifferenceAgainstTarget()
+        {
+            var m1 = messages[^2];
+            var m2 = messages[^1];
+            var width = m1.GetContentWidth() + m2.GetContentWidth();
+            var targetWidth = (targetReference.transform as RectTransform)!.rect.width
+                              - targetReference.padding.left
+                              - targetReference.padding.right;
+            targetWidth += targetWidthCorrection;
+            var diff = width - targetWidth;
+            return diff;
         }
 
         [Button]
