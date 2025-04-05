@@ -567,7 +567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 189722226407092182, guid: 2f1c7cd024491ba4bb72317219bb005c, type: 3}
       propertyPath: m_Name
-      value: AppPage
+      value: ChatPage
       objectReference: {fileID: 0}
     - target: {fileID: 419486279076530730, guid: 2f1c7cd024491ba4bb72317219bb005c, type: 3}
       propertyPath: m_AnchorMax.y
