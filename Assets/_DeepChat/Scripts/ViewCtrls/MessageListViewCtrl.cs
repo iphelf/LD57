@@ -31,6 +31,8 @@ namespace _DeepChat.Scripts.ViewCtrls
             var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
             messageViewCtrl.SetContent(message);
             messages.Add(messageViewCtrl);
+            scrollRect.normalizedPosition = new Vector2(0, 0);
+            Canvas.ForceUpdateCanvases();
         }
 
         [Button]

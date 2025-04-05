@@ -573,6 +573,10 @@ PrefabInstance:
       propertyPath: runOnStart
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 415246391300262863, guid: 2f1c7cd024491ba4bb72317219bb005c, type: 3}
+      propertyPath: npcMessageSpan
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 419486279076530730, guid: 2f1c7cd024491ba4bb72317219bb005c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
