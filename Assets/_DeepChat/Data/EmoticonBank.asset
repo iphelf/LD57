@@ -13,10 +13,24 @@ MonoBehaviour:
   m_Name: EmoticonBank
   m_EditorClassIdentifier: 
   emoticons:
-  - QAQ
-  - "\u03A3(;\uFF9F\u0434\uFF9F)"
-  - "\u0E05(\u0E51 \u0300\u3145 \u0301\u0E51)\u0E05"
-  - "( \u0E51\u275B\u1D17\u275B\u0E51 ) ( \u275B\u0E31\u1D17\u275B\u0E31\u204E )"
-  - "\u033F\u033F \u033F\u033F \u033F\u033F \u033F'\u033F\u2019\\\u0335\u0347\u033F\u033F\\\u0437=(
-    \u0360\xB0 \u035F\u0296 \u0361\xB0)=\u03B5/\u033F\u033F\u0335\u0347/\u2018\u033F\u033F
-    \u033F \u033F \u033F \u033F \u033F"
+  - content: QAQ
+    emotion: 2
+    size: 1
+  - content: "\u03A3(;\uFF9F\u0434\uFF9F)"
+    emotion: 1
+    size: 1
+  - content: "\u0E05(\u0E51 \u0300\u3145 \u0301\u0E51)\u0E05"
+    emotion: 1
+    size: 2
+  - content: "\u2602\uA4B0\xB4\u2022\u0BF0\u2022`\u0E51\uA4B1\u2026"
+    emotion: 2
+    size: 2
+  - content: "( \u0E51\u275B\u1D17\u275B\u0E51 ) ( \u275B\u0E31\u1D17\u275B\u0E31\u204E
+      )"
+    emotion: 1
+    size: 3
+  - content: "\u033F\u033F \u033F\u033F \u033F\u033F \u033F'\u033F\u2019\\\u0335\u0347\u033F\u033F\\\u0437=(
+      \u0360\xB0 \u035F\u0296 \u0361\xB0)=\u03B5/\u033F\u033F\u0335\u0347/\u2018\u033F\u033F
+      \u033F \u033F \u033F \u033F \u033F"
+    emotion: 2
+    size: 3
