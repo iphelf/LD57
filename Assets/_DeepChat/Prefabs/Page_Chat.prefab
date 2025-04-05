@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6382726488741603383}
   - component: {fileID: 7322791517608258712}
   - component: {fileID: 2658060024444698105}
-  - component: {fileID: 5149181184084793627}
+  - component: {fileID: 415246391300262863}
   m_Layer: 5
   m_Name: Page_Chat
   m_TagString: Untagged
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5149181184084793627
+--- !u!114 &415246391300262863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,9 +116,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 189722226407092182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92101f057c884ae79da0180926f71347, type: 3}
+  m_Script: {fileID: 11500000, guid: 457c839e67744e58a1a54183b7d511bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messages: {fileID: 3769262000791549505}
+  npcMessageSpan: 3
+  npcMessageBank: {fileID: 11400000, guid: edfb007cdf6bdab429d289d9c687bfb1, type: 2}
+  runOnStart: 0
 --- !u!1 &2403846541218917855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,6 +1457,8 @@ MonoBehaviour:
   playerMessagePrefab: {fileID: 2616092424507997681, guid: bf921e5526aa72c49b8ea7fc52b8dcbb, type: 3}
   npcMessagePrefab: {fileID: 6434758871078733479, guid: d105a3fa86b7a8d40843277a0bbfaad5, type: 3}
   messages: []
+  clearOnAwake: 1
+  dummyMessage: 
 --- !u!222 &2136156124510050947
 CanvasRenderer:
   m_ObjectHideFlags: 0
