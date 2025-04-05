@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
@@ -32,6 +33,7 @@ namespace _DeepChat.Scripts.Logic
         private bool _isRunning;
 
         private int _score;
+        private readonly List<Emoticon> _playerEmoticons = new();
 
         private bool _npcMessageTimeout;
 
@@ -51,12 +53,14 @@ namespace _DeepChat.Scripts.Logic
         {
             _isRunning = true;
 
+            RefillPlayerEmoticons();
+
             while (_isRunning)
             {
                 var index = Random.Range(0, npcMessageBank.messages.Count);
                 var message = npcMessageBank.messages[index];
                 messages.Append(ActorType.Npc, message);
-                emoticons.SetEmoticons(playerEmoticonBank.emoticons);
+
                 yield return new WaitUntil(() => _npcMessageTimeout);
                 _npcMessageTimeout = false;
             }
@@ -78,9 +82,12 @@ namespace _DeepChat.Scripts.Logic
         private void PlayerSendMessage()
         {
             var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
+            for (var i = _playerEmoticons.Count - 1; i >= 0; --i)
+                if (selectedEmoticons.Contains(_playerEmoticons[i]))
+                    _playerEmoticons.RemoveAt(i);
+
             var message = string.Concat(selectedEmoticons.Select(e => e.content));
             messages.Append(ActorType.Player, message);
-            emoticons.SetEmoticons(playerEmoticonBank.emoticons);
 
             var diff = messages.GetDifferenceAgainstTarget();
             Debug.Log($"Difference against target width: {diff:F2}");
@@ -88,6 +95,20 @@ namespace _DeepChat.Scripts.Logic
             var scoreChange = gameRule.GetScoreChange(dist);
             _score += scoreChange;
             score.UpdateScore(_score);
+
+            RefillPlayerEmoticons();
+        }
+
+        private void RefillPlayerEmoticons()
+        {
+            while (_playerEmoticons.Count < gameRule.maxEmoticonCount)
+            {
+                var emoticon = gameRule.SampleEmoticon(playerEmoticonBank,
+                    sizeType => _playerEmoticons.Any(e => e.size == sizeType));
+                _playerEmoticons.Add(emoticon);
+            }
+
+            emoticons.SetEmoticons(_playerEmoticons);
         }
     }
 }
