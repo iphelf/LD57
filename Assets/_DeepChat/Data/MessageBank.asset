@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7cb3e971c144ca853131c2de8a815f, type: 3}
+  m_Name: MessageBank
+  m_EditorClassIdentifier: 
+  messages:
+  - "QAQ\u033F\u033F \u033F\u033F \u033F'\u033F\u2019\\\u0335\u0347\u033F\u033F\\\u0437=(
+    \u0360\xB0 \u035F\u0296 \u0361\xB0)"
+  - "\u03A3(;\uFF9F\u0434\uFF9F)"
+  - "\u0E05(\u0E51 \u0300\u3145 \u0301\u0E51)\u0E05( \u0E51\u275B\u1D17\u275B\u0E51
+    )"
+  - "\u2602\uA4B0\xB4\u2022\u0BF0\u2022`\u0E51"
+  - "( \u0E51\u275B\u1D17\u275B\u0E51 )"
+  - "\u033F\u033F \u033F\u033F \u033F\u033F \u033F'\u033F\u2019\\\u0335\u0347\u033F\u033F\\\u0437=(
+    \u0360\xB0 \u035F\u0296 \u0361\xB0)=\u03B5/\u033F\u033F\u0335\u0347/\u2018\u033F\u033F
+    \u033F \u033F \u033F \u033F \u033F"
