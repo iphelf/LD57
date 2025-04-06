@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace _DeepChat.Scripts.ViewCtrls
 {
@@ -7,10 +8,12 @@ namespace _DeepChat.Scripts.ViewCtrls
     {
         [SerializeField] private TMP_Text text;
         [SerializeField] private RectTransform content;
-
+        
+        public UnityEvent OnDataUpdated = new UnityEvent();
         public void SetContent(string message)
         {
             text.text = message;
+            OnDataUpdated?.Invoke();
         }
 
         public float GetContentWidth()
