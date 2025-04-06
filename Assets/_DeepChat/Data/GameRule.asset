@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0acce422faa4233939308ab18c72c8f, type: 3}
   m_Name: GameRule
   m_EditorClassIdentifier: 
-  perfectMatchBound: 25
-  goodMatchBound: 55
-  perfectMatchScore: 20
+  perfectMatchBound: 18
+  goodMatchBound: 50
+  perfectMatchScore: 25
   goodMatchScore: 10
   badMatchScore: -10
   playerEmoticonBank: {fileID: 11400000, guid: edfb007cdf6bdab429d289d9c687bfb1, type: 2}
