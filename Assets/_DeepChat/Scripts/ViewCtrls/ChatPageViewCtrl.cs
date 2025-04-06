@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
 using UnityEngine;
@@ -42,7 +41,15 @@ namespace _DeepChat.Scripts.ViewCtrls
                 if (!runOnStart)
                     return;
                 var game = new ChatGame();
-                await game.Run(destroyCancellationToken, gameRule, this);
+                var goodResult = await game.Run(destroyCancellationToken, gameRule, this);
+                if (goodResult)
+                {
+                    Debug.Log("Good End");
+                }
+                else
+                {
+                    Debug.Log("Bad End");
+                }
             }
             catch (Exception e)
             {
@@ -103,12 +110,16 @@ namespace _DeepChat.Scripts.ViewCtrls
         }
 
         public async Awaitable AsyncPresentTurnResult(
-            CancellationToken token, TurnActionResult actionResult, Rating rating, int newScore)
+            CancellationToken token, TurnActionResult actionResult, Rating rating)
         {
             if (!actionResult.IsTimeout)
                 await messages.AsyncMatchMessagePair(token, rating.WidthMatchResult, actionResult.MatchWidthDiff > 0);
             await messages.AsyncAppendRating(token, rating);
-            score.UpdateScore(newScore);
+        }
+
+        public async Awaitable AsyncPresentNewScore(int newScore, int maxScore)
+        {
+            score.UpdateScore(newScore, maxScore);
         }
 
         public async Awaitable AsyncRefreshPlayerEmoticons(
