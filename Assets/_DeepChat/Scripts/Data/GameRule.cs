@@ -22,6 +22,7 @@ namespace _DeepChat.Scripts.Data
             Rating rating = new();
             if (actionResult.IsTimeout)
             {
+                rating.IsTimeout = true;
                 rating.WidthMatchResult = WidthMatchResultType.Terrible;
                 rating.WidthMatchScore = terribleMatchScore;
             }

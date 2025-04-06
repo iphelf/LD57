@@ -102,7 +102,8 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncPresentTurnResult(CancellationToken token, Rating rating, int newScore)
         {
-            await messages.AsyncMatchMessagePair(token);
+            if (!rating.IsTimeout)
+                await messages.AsyncMatchMessagePair(token);
             await messages.AsyncAppendRating(token, rating);
             score.UpdateScore(newScore);
         }
