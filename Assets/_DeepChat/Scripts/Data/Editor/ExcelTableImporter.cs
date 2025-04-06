@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ExcelDataReader;
 using UnityEditor.AssetImporters;
 using UnityEngine;
@@ -15,10 +16,10 @@ namespace _DeepChat.Scripts.Data.Editor
             if (Path.GetFileName(ctx.assetPath).StartsWith("~$"))
                 return;
 
-            Dictionary<string, ExcelTableAsset.Sheet> sheetDict;
+            List<ExcelTableAsset.Sheet> sheets;
             try
             {
-                sheetDict = LoadExcelData(ctx.assetPath);
+                sheets = LoadExcelData(ctx.assetPath);
             }
             catch (Exception e)
             {
@@ -28,17 +29,16 @@ namespace _DeepChat.Scripts.Data.Editor
 
             var asset = ScriptableObject.CreateInstance<ExcelTableAsset>();
             asset.tableName = Path.GetFileNameWithoutExtension(ctx.assetPath);
-            asset.SheetDict = sheetDict;
+            asset.sheets = sheets;
             ctx.AddObjectToAsset("<root>", asset);
             ctx.SetMainObject(asset);
-            asset.RefreshInspectorView();
         }
 
-        private static Dictionary<string, ExcelTableAsset.Sheet> LoadExcelData(string path)
+        private static List<ExcelTableAsset.Sheet> LoadExcelData(string path)
         {
             using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using var reader = ExcelReaderFactory.CreateReader(fs);
-            Dictionary<string, ExcelTableAsset.Sheet> sheetDict = new();
+            List<ExcelTableAsset.Sheet> sheets = new();
             do
             {
                 var sheetName = reader.Name;
@@ -81,11 +81,11 @@ namespace _DeepChat.Scripts.Data.Editor
                 sheet.ColumnOfName = new Dictionary<string, int>();
                 for (var i = 0; i < columnNames.Count; ++i)
                     sheet.ColumnOfName.Add(columnNames[i], i);
-                sheet.Rows = rows;
-                sheetDict.Add(sheetName, sheet);
+                sheet.rows = rows.Select(row => new ExcelTableAsset.RowEntry { cells = row }).ToList();
+                sheets.Add(sheet);
             } while (reader.NextResult());
 
-            return sheetDict;
+            return sheets;
         }
     }
 }

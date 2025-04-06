@@ -1,16 +1,41 @@
 ﻿using System.Collections.Generic;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
+using NaughtyAttributes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _DeepChat.Scripts.Data
 {
     [CreateAssetMenu(fileName = "EmoticonBank", menuName = "SO/EmoticonBank")]
     public class EmoticonBank : ScriptableObject
     {
-        public List<Emoticon> emoticons = new();
+        [Header("Excel")] [SerializeField] private ExcelTableAsset excelTableAsset;
+        [SerializeField] private string sheetName = "WordSheet";
+
+        [Header("Content")] public List<Emoticon> emoticons = new();
 
         private Dictionary<SizeType, List<Emoticon>> _emoticonsOfSize;
+
+        [Button]
+        private void ImportFromExcel()
+        {
+            var sheet = excelTableAsset.SheetDict[sheetName];
+
+            emoticons.Clear();
+            foreach (var row in sheet.rows)
+            {
+                var emoticon = new Emoticon
+                {
+                    content = row.cells[sheet.ColumnOfName["Content"]],
+                    emotion = (EmotionType)int.Parse(row.cells[sheet.ColumnOfName["Emotion"]]),
+                    size = (SizeType)int.Parse(row.cells[sheet.ColumnOfName["Size"]]),
+                };
+                emoticons.Add(emoticon);
+            }
+
+            OnValidate();
+        }
 
         private void OnValidate()
         {

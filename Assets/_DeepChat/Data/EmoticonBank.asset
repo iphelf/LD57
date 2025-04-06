@@ -12,22 +12,236 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d39208c584a09af64892f0d84e537, type: 3}
   m_Name: EmoticonBank
   m_EditorClassIdentifier: 
+  excelTableAsset: {fileID: -944628639613478452, guid: e5791855362604054b1001494957ca00, type: 3}
+  sheetName: WordSheet
   emoticons:
   - content: QAQ
     emotion: 2
     size: 1
-  - content: "(\u2267\u2207\u2266)/"
-    emotion: 1
+  - content: "\u03A3(;\uFF9F\u0434\uFF9F)"
+    emotion: 2
     size: 1
+  - content: "\uFF3C(\uFF3E\u2200\uFF3E)\u30E1(\uFF3E\u2200\uFF3E)\u30CE"
+    emotion: 1
+    size: 3
+  - content: "\u30FE(\u30FB\u03C9\u30FB`)\u30CE\u30FE(\xB4\u30FB\u03C9\u30FB)\u30CE\u309B"
+    emotion: 1
+    size: 3
+  - content: "\u2606\u30FE(*\xB4\u30FB\u2200\u30FB)\uFF89\u30FE(\u30FB\u2200\u30FB`*)\uFF89\u2606"
+    emotion: 1
+    size: 3
+  - content: "\u0AEE(\u02F6\u1D54 \u1D55 \u1D54\u02F6)\u10D0"
+    emotion: 1
+    size: 2
+  - content: "- \u0317\u0300(\u0E51\u1D54\u2314\u1D54\u0E51)\u03B5\xEF\u0437"
+    emotion: 1
+    size: 2
+  - content: "\u2602\uA4B0\xB4\u2022\u0BF0\u2022`\u0E51\uA4B1\u2026"
+    emotion: 2
+    size: 2
+  - content: "( \u0E51\u275B\u1D17\u275B\u0E51 ) ( \u275B\u0E31\u1D17\u275B\u0E31\u204E
+      )"
+    emotion: 1
+    size: 3
+  - content: "(\u0E51\u01A1 \u2083 \u01A1)\u2665 \u2661(\u02C3\u0348 \u0AA6 \u02C2\u0348
+      \u0F36 )"
+    emotion: 1
+    size: 3
   - content: "o(*\u2267\u25BD\u2266)\u30C4"
     emotion: 1
     size: 2
+  - content: "(=\uFF40\u03C9\xB4=)"
+    emotion: 1
+    size: 1
+  - content: "(\u25CD\u2022\u1D17\u2022\u25CD)\uFF89\u2661"
+    emotion: 1
+    size: 2
+  - content: "(=^\uFF65\uFF6A\uFF65^=)"
+    emotion: 1
+    size: 2
+  - content: "(^._.^)\uFF89"
+    emotion: 1
+    size: 1
+  - content: "(=^\u2025^=)"
+    emotion: 1
+    size: 1
+  - content: "(\u204E\u02C3\u11BA\u02C2)"
+    emotion: 1
+    size: 1
+  - content: "(\u2267\u25E1\u2266) \u2661"
+    emotion: 1
+    size: 1
+  - content: "(\u2044 \u2044\u2022\u2044\u03C9\u2044\u2022\u2044 \u2044)"
+    emotion: 1
+    size: 1
+  - content: "(\u0E51>\u1D17<\u0E51)"
+    emotion: 1
+    size: 1
+  - content: "(*\xB0\u25BD\xB0*)"
+    emotion: 1
+    size: 1
+  - content: "(\u2727\u03C9\u2727)"
+    emotion: 1
+    size: 1
+  - content: "(*\xB4\u2200`*)"
+    emotion: 1
+    size: 1
+  - content: "(\u0E51\xAF\u2200\xAF\u0E51)"
+    emotion: 1
+    size: 1
+  - content: "\uFF5E(^\u0437^)-\u2606"
+    emotion: 1
+    size: 1
+  - content: "(\u2267\uFE40\u2266)"
+    emotion: 1
+    size: 1
+  - content: "( \u02D8 \xB3\u02D8)\u2665"
+    emotion: 1
+    size: 1
+  - content: "~(\uFFE3\u25BD\uFFE3)~*"
+    emotion: 1
+    size: 1
+  - content: "(\u3063\u02D8\u03C9\u02D8\u03C2 )"
+    emotion: 1
+    size: 2
+  - content: "(\u3065\uFFE3 \xB3\uFFE3)\u3065"
+    emotion: 1
+    size: 2
+  - content: "\u2044(\u2044 \u2044\u2022\u2044\u03C9\u2044\u2022\u2044 \u2044)\u2044"
+    emotion: 1
+    size: 1
+  - content: "(\u30CE\u30FB\u03C9\u30FB)\u30CE"
+    emotion: 1
+    size: 2
+  - content: "(\u2267\u2207\u2266)/"
+    emotion: 1
+    size: 1
+  - content: "(\u25CF\uFFE3(\uFF74)\uFFE3\u25CF)"
+    emotion: 1
+    size: 1
+  - content: "(\u2312\u25BD\u2312)\u2606"
+    emotion: 1
+    size: 1
+  - content: "(\u273F\u25E1\u203F\u25E1)"
+    emotion: 1
+    size: 1
+  - content: "(\uFF89\u2267\u2200\u2266)\uFF89"
+    emotion: 1
+    size: 2
+  - content: "(\u2661\u0D30\u203F\u0D30)"
+    emotion: 1
+    size: 2
+  - content: "\u273F\u30FD(\xB0\u25BD\xB0)\u30CE\u273F"
+    emotion: 1
+    size: 2
+  - content: "\u0505(\u2256\u203F\u2256\u0505)"
+    emotion: 1
+    size: 2
+  - content: "(\uFF61\u2022\u0301\uFE3F\u2022\u0300\uFF61)"
+    emotion: 1
+    size: 1
+  - content: "\uFF78\uFF9E\uFF6F!(\u0E51\u2022\u0300\u3142\u2022\u0301)\u0648\u2727"
+    emotion: 1
+    size: 1
+  - content: "(\u0E51\u2022 . \u2022\u0E51)"
+    emotion: 1
+    size: 1
+  - content: "(\u0E05>\u03C9<*\u0E05)"
+    emotion: 1
+    size: 1
+  - content: "|\u03C9\u2022`)"
+    emotion: 1
+    size: 1
+  - content: "\u0B18(\u0A6D\u02CA\uA4B3\u02CB)\u0A6D\u2727"
+    emotion: 1
+    size: 1
+  - content: "\u03A3(\xB0\u0414\xB0;"
+    emotion: 2
+    size: 1
+  - content: "\u200D(\u252C\u252C\uFE4F\u252C\u252C)"
+    emotion: 2
+    size: 1
+  - content: "(\xB0\u30ED\xB0) !?"
+    emotion: 2
+    size: 2
+  - content: "(\uFF9F\u0414\uFF9F\u2261\uFF9F\u0434\uFF9F)!?"
+    emotion: 2
+    size: 2
+  - content: "(\u2299_\u25CE)"
+    emotion: 2
+    size: 1
+  - content: "(\u2299\u02CD\u2299)"
+    emotion: 2
+    size: 1
   - content: "(\u300D\xB0\u30ED\xB0)\u300D"
     emotion: 2
     size: 2
-  - content: "\uFF3C(\uFF3E\u2200\uFF3E)\u30E1(\uFF3E\u2200\uFF3E)\u30CE"
-    emotion: 1
+  - content: "(\uFF9F\u22BF\uFF9F)\uFF82"
+    emotion: 2
+    size: 1
+  - content: "( \xB4\u2022\u0325\u0325\u0325\u03C9\u2022\u0325\u0325\u0325` )"
+    emotion: 2
+    size: 1
+  - content: " \u02C3\u0323\u0323\u0325\u1DC4\u2313\u02C2\u0323\u0323\u0325\u1DC5 "
+    emotion: 2
+    size: 1
+  - content: "(\u2299_\u2299)?"
+    emotion: 2
+    size: 1
+  - content: "\u03A3(\u2609\u25BD\u2609"
+    emotion: 2
+    size: 1
+  - content: "o(\u2565\uFE4F\u2565)o"
+    emotion: 2
+    size: 1
+  - content: "(\u2299\uFE3F\u2299)"
+    emotion: 2
+    size: 1
+  - content: "\u2517( \xB4\u30FB\u2227\u30FB\uFF40)\u251B"
+    emotion: 2
+    size: 2
+  - content: "\u250C(\u3002\u0414\u3002)\u2510"
+    emotion: 2
+    size: 1
+  - content: "_(:\u0437\u300D\u2220)_"
+    emotion: 2
+    size: 1
+  - content: "(\u03A9\u0414\u03A9)"
+    emotion: 2
+    size: 1
+  - content: "( \u012C ^ \u012C )"
+    emotion: 2
+    size: 1
+  - content: "\u2211(\uFFE3\u25A1\uFFE3)"
+    emotion: 2
+    size: 2
+  - content: "\u053E\u2038\u053E"
+    emotion: 2
+    size: 1
+  - content: "(\uFF61\u2022\u0301\uFE3F\u2022\u0300\uFF61)"
+    emotion: 2
+    size: 1
+  - content: "(\uA4AA\uA4AB\uA4AA )"
+    emotion: 2
+    size: 1
+  - content: "\uFF61\uFF9F(\uFF9F\xB4\u0414\uFF40\uFF9F)\uFF9F\uFF61"
+    emotion: 2
+    size: 2
+  - content: "(\u3063\xB4\u03C9`)\uFF89(\u2565\u03C9\u2565)"
+    emotion: 2
+    size: 3
+  - content: "\uFF61\uFF65\uFF9F\uFF65(\uFF89\u0414`)\u30FD(\uFFE3\u03C9\uFFE3 )"
+    emotion: 2
+    size: 3
+  - content: ".\uFF65\uFF9F\uFF9F\uFF65(\uFF0F\u03C9\uFF3C)\uFF65\uFF9F\uFF9F\uFF65."
+    emotion: 2
     size: 3
   - content: "\uFF61\uFF65\uFF9F\uFF9F*(>\u0434<)*\uFF9F\uFF9F\uFF65\uFF61"
     emotion: 2
     size: 3
+  - content: ".\uFF61\uFF65\uFF9F\uFF9F\uFF65(\uFF1E_\uFF1C)\uFF65\uFF9F\uFF9F\uFF65\uFF61."
+    emotion: 2
+    size: 3
+  - content: "\u03A3(\xB0\u25B3\xB0|||)\uFE34"
+    emotion: 2
+    size: 2

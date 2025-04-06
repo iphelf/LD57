@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -16,16 +17,6 @@ namespace _DeepChat.Scripts.Data
             public string name;
             public List<string> columns;
             public Dictionary<string, int> ColumnOfName;
-            public List<List<string>> Rows;
-        }
-
-        public Dictionary<string, Sheet> SheetDict;
-
-        [Serializable]
-        public class SheetEntry
-        {
-            public string name;
-            public List<string> columns;
             public List<RowEntry> rows;
         }
 
@@ -35,22 +26,18 @@ namespace _DeepChat.Scripts.Data
             public List<string> cells;
         }
 
-        [SerializeField, ReadOnly] private List<SheetEntry> sheets;
+        [ReadOnly] public List<Sheet> sheets;
 
-        public void RefreshInspectorView()
+        public Dictionary<string, Sheet> SheetDict;
+
+        private void OnValidate()
         {
-            sheets = new List<SheetEntry>();
-            foreach (var (sheetName, sheetData) in SheetDict)
+            SheetDict = sheets.ToDictionary(sheet => sheet.name, sheet => sheet);
+            foreach (var sheet in sheets)
             {
-                var sheetEntry = new SheetEntry
-                {
-                    name = sheetName,
-                    columns = sheetData.columns,
-                    rows = new List<RowEntry>()
-                };
-                foreach (var row in sheetData.Rows)
-                    sheetEntry.rows.Add(new RowEntry { cells = row });
-                sheets.Add(sheetEntry);
+                sheet.ColumnOfName = new Dictionary<string, int>();
+                for (int i = 0; i < sheet.columns.Count; ++i)
+                    sheet.ColumnOfName.Add(sheet.columns[i], i);
             }
         }
     }
