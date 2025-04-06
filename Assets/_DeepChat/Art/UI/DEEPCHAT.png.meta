@@ -311,7 +311,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DEEPCHAT_0: 7028802205112763367
+      DEEPCHAT_1: 7705715618477425297
+      DEEPCHAT_2: -3303062101779243798
+      DEEPCHAT_3: 4436198342172894550
+      DEEPCHAT_4: 2087828432493033223
+      DEEPCHAT_5: 3800358191516279361
+      DEEPCHAT_6: -219922878903527667
+      DEEPCHAT_7: 4585183317237246933
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
