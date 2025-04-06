@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
@@ -35,6 +34,11 @@ namespace _DeepChat.Scripts.ViewCtrls
         {
             if (clearOnAwake)
                 Clear();
+        }
+
+        private void OnDestroy()
+        {
+            DOTween.Kill(gameObject.GetInstanceID());
         }
 
         public async Awaitable AsyncAppendPlayerMessage(CancellationToken token, string message)
@@ -126,24 +130,26 @@ namespace _DeepChat.Scripts.ViewCtrls
             if (makeM1SemiTransparent)
                 m2.transform.SetSiblingIndex(m1.transform.GetSiblingIndex());
 
+            var goID = gameObject.GetInstanceID();
+
             const float joinDuration = 1.0f;
             if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(0.8f, joinDuration).Play();
+                m1.GetCanvasGroup().DOFade(0.8f, joinDuration).SetId(goID).Play();
             var targetY = (m1OriginalY + m2OriginalY) * 0.5f;
-            m1Transform.DOLocalMoveY(targetY, joinDuration).Play();
-            m2Transform.DOLocalMoveY(targetY, joinDuration).Play();
+            m1Transform.DOLocalMoveY(targetY, joinDuration).SetId(goID).Play();
+            m2Transform.DOLocalMoveY(targetY, joinDuration).SetId(goID).Play();
             indicator.GetCanvasGroup().alpha = 0.0f;
             await Awaitable.WaitForSecondsAsync(joinDuration, token);
 
             const float indicateDuration = 1.0f;
-            indicator.GetCanvasGroup().DOFade(1.0f, indicateDuration * 0.5f).Play();
+            indicator.GetCanvasGroup().DOFade(1.0f, indicateDuration * 0.5f).SetId(goID).Play();
             await Awaitable.WaitForSecondsAsync(indicateDuration, token);
 
             const float separateDuration = 1.0f;
             if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(1.0f, separateDuration).Play();
-            m1Transform.DOLocalMoveY(m1OriginalY, separateDuration).Play();
-            m2Transform.DOLocalMoveY(m2OriginalY, separateDuration).Play();
+                m1.GetCanvasGroup().DOFade(1.0f, separateDuration).SetId(goID).Play();
+            m1Transform.DOLocalMoveY(m1OriginalY, separateDuration).SetId(goID).Play();
+            m2Transform.DOLocalMoveY(m2OriginalY, separateDuration).SetId(goID).Play();
             await Awaitable.WaitForSecondsAsync(separateDuration, token);
 
             if (makeM1SemiTransparent)

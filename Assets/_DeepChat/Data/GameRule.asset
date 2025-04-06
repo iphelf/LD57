@@ -19,6 +19,8 @@ MonoBehaviour:
   badMatchScore: -5
   terribleMatchScore: -15
   emotionBonusMatchScore: 5
+  minScoreForHappyEnd: 30
+  maxScoreForBadEnd: -30
   playerEmoticonBank: {fileID: 11400000, guid: edfb007cdf6bdab429d289d9c687bfb1, type: 2}
   maxEmoticonCountInHand: 8
   maxEmotionCountInDeck: 30

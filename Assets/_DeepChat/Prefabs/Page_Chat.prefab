@@ -58,6 +58,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameRule: {fileID: 11400000, guid: 5f117f1f62006974fbe113041258854c, type: 2}
   runOnStart: 1
+  closeButton: {fileID: 5376395230834235142}
+  helpButton: {fileID: 4240669422228094630}
   messages: {fileID: 3769262000791549505}
   emoticons: {fileID: 6494140293467741769}
   sendButton: {fileID: 6135604224982272135}
@@ -805,6 +807,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3316fb659202ad4883da7dcd1ab615a, type: 3}
+--- !u!114 &4240669422228094630 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2853262182762825876, guid: a3316fb659202ad4883da7dcd1ab615a, type: 3}
+  m_PrefabInstance: {fileID: 2108019468229047858}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5376395230834235142 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6331492026178920756, guid: a3316fb659202ad4883da7dcd1ab615a, type: 3}
+  m_PrefabInstance: {fileID: 2108019468229047858}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6775394314825789333 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4847625488983792039, guid: a3316fb659202ad4883da7dcd1ab615a, type: 3}

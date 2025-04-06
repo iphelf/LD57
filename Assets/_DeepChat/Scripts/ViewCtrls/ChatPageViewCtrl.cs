@@ -15,8 +15,10 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private bool runOnStart;
 
         [Header("UI Components")] [SerializeField]
-        private MessageListViewCtrl messages;
+        private Button closeButton;
 
+        [SerializeField] private Button helpButton;
+        [SerializeField] private MessageListViewCtrl messages;
         [SerializeField] private EmoticonListViewCtrl emoticons;
         [SerializeField] private Button sendButton;
         [SerializeField] private ScoreViewCtrl score;
@@ -30,6 +32,11 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         private void Awake()
         {
+            closeButton.onClick.AddListener(() =>
+            {
+                Destroy(gameObject);
+                OnClose?.Invoke();
+            });
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);
             emoticons.SelectionChanged += OnPlayerEmoticonSelectionChanged;
         }
