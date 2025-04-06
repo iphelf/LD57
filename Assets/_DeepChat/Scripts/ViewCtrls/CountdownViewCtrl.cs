@@ -16,6 +16,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public void StartCountdown(float seconds, Action onTimeout)
         {
+            gameObject.SetActive(true);
             _isRunning = true;
             _total = seconds;
             _remain = seconds;
@@ -24,6 +25,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public void StopCountdown()
         {
+            gameObject.SetActive(false);
             _isRunning = false;
             _callback = null;
         }
@@ -43,9 +45,8 @@ namespace _DeepChat.Scripts.ViewCtrls
             filler.fillAmount = 0.0f;
 
             _remain = 0.0f;
-            _isRunning = false;
             var callback = _callback;
-            _callback = null;
+            StopCountdown();
             callback?.Invoke();
         }
     }

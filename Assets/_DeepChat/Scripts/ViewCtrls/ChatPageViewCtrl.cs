@@ -5,6 +5,7 @@ using System.Threading;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,10 +35,29 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         private async void Start()
         {
-            if (!runOnStart)
-                return;
-            var game = new ChatGame();
-            await game.Run(destroyCancellationToken, gameRule, this);
+            try
+            {
+                if (!runOnStart)
+                    return;
+                var game = new ChatGame();
+                await game.Run(destroyCancellationToken, gameRule, this);
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"{nameof(ChatPageViewCtrl)} error: {e}");
+            }
+        }
+
+        private void FinishPlayerAction(bool success)
+        {
+            countdown.StopCountdown();
+            inputField.SetAsBlockingInput();
+
+            var result = success ? emoticons.GetSelectedEmoticons().ToList() : null;
+
+            var waitingPlayerAction = _waitingPlayerAction;
+            _waitingPlayerAction = null;
+            waitingPlayerAction.SetResult(result);
         }
 
         private void OnPlayerSendButtonClicked()
@@ -48,13 +68,7 @@ namespace _DeepChat.Scripts.ViewCtrls
                 return;
             }
 
-            var selectedEmoticons = emoticons.GetSelectedEmoticons().ToList();
-
-            inputField.SetAsBlockingInput();
-
-            var waitingPlayerAction = _waitingPlayerAction;
-            _waitingPlayerAction = null;
-            waitingPlayerAction.SetResult(selectedEmoticons);
+            FinishPlayerAction(true);
         }
 
         private void OnPlayerEmoticonSelectionChanged()
@@ -65,19 +79,20 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncNpcSendMessage(CancellationToken token, Message message)
         {
-            messages.Append(ActorType.Npc, message.content);
+            messages.AppendMessage(ActorType.Npc, message.content);
         }
 
         public Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
         {
             inputField.SetAsHintingInput();
             _waitingPlayerAction = new AwaitableCompletionSource<List<Emoticon>>();
+            countdown.StartCountdown(maxWaitSeconds, () => FinishPlayerAction(false));
             return _waitingPlayerAction.Awaitable;
         }
 
         public async Awaitable AsyncPlayerSendMessage(CancellationToken token, string messageContent)
         {
-            messages.Append(ActorType.Player, messageContent);
+            messages.AppendMessage(ActorType.Player, messageContent);
         }
 
         public async Awaitable AsyncPresentTurnResult(CancellationToken token, Rating rating, int newScore)

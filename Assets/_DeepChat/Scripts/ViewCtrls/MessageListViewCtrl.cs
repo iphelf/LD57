@@ -16,6 +16,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private GameObject npcMessagePrefab;
         [SerializeField] private LayoutGroup targetReference;
         [SerializeField] private float targetWidthCorrection;
+        [SerializeField] private string playerBusyStr = "The server is busy, please try again later...";
 
         [SerializeField, ReadOnly] private List<MessageViewCtrl> messages;
 
@@ -27,12 +28,12 @@ namespace _DeepChat.Scripts.ViewCtrls
                 Clear();
         }
 
-        public void Append(ActorType actorType, string message)
+        public void AppendMessage(ActorType actorType, [CanBeNull] string message)
         {
             var messagePrefab = actorType == ActorType.Player ? playerMessagePrefab : npcMessagePrefab;
             var go = Instantiate(messagePrefab, listRoot);
             var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
-            messageViewCtrl.SetContent(message);
+            messageViewCtrl.SetContent(message ?? playerBusyStr);
             messages.Add(messageViewCtrl);
             scrollRect.normalizedPosition = new Vector2(0, 0);
             Canvas.ForceUpdateCanvases();
@@ -68,14 +69,14 @@ namespace _DeepChat.Scripts.ViewCtrls
         [UsedImplicitly]
         private void DebugAppendPlayerMessage()
         {
-            Append(ActorType.Player, string.IsNullOrEmpty(dummyMessage) ? "Message from player" : dummyMessage);
+            AppendMessage(ActorType.Player, string.IsNullOrEmpty(dummyMessage) ? "Message from player" : dummyMessage);
         }
 
         [Button(enabledMode: EButtonEnableMode.Playmode)]
         [UsedImplicitly]
         private void DebugAppendNpcMessage()
         {
-            Append(ActorType.Npc, string.IsNullOrEmpty(dummyMessage) ? "Message from NPC" : dummyMessage);
+            AppendMessage(ActorType.Npc, string.IsNullOrEmpty(dummyMessage) ? "Message from NPC" : dummyMessage);
         }
     }
 }

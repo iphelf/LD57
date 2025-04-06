@@ -32,11 +32,19 @@ namespace _DeepChat.Scripts.Logic
                     await _view.AsyncNpcSendMessage(token, message);
 
                     var selectedEmoticons = await _view.AsyncWaitForPlayerAction(token, _rule.npcMaxWaitDuration);
-                    for (var i = _playerEmoticons.Count - 1; i >= 0; --i)
-                        if (selectedEmoticons.Contains(_playerEmoticons[i]))
-                            _playerEmoticons.RemoveAt(i);
-                    var messageContent = string.Concat(selectedEmoticons.Select(e => e.content));
-                    await _view.AsyncPlayerSendMessage(token, messageContent);
+                    if (selectedEmoticons == null)
+                    {
+                        await _view.AsyncPlayerSendMessage(token, null);
+                    }
+                    else
+                    {
+                        for (var i = _playerEmoticons.Count - 1; i >= 0; --i)
+                            if (selectedEmoticons.Contains(_playerEmoticons[i]))
+                                _playerEmoticons.RemoveAt(i);
+                        var messageContent = string.Concat(selectedEmoticons.Select(e => e.content));
+                        await _view.AsyncPlayerSendMessage(token, messageContent);
+                    }
+
                     var diff = _view.GetMessageWidthDifference();
                     Debug.Log($"Difference against target width: {diff:F2}");
                     var distance = Mathf.Abs(diff);
