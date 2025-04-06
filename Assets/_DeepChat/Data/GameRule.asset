@@ -17,3 +17,12 @@ MonoBehaviour:
   perfectMatchScore: 20
   goodMatchScore: 10
   badMatchScore: -10
+  playerEmoticonBank: {fileID: 11400000, guid: edfb007cdf6bdab429d289d9c687bfb1, type: 2}
+  maxEmoticonCount: 8
+  shortBaseWeight: 4.5
+  mediumBaseWeight: 4
+  longBaseWeight: 1.5
+  shortBonusWeight: 1.5
+  mediumBonusWeight: 1
+  longBonusWeight: 1.5
+  npcMessageBank: {fileID: 11400000, guid: 866df3683d2647a4794246714e308b44, type: 2}

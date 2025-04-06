@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc7cb3e971c144ca853131c2de8a815f, type: 3}
-  m_Name: MessageBank
+  m_Name: NpcMessageBank
   m_EditorClassIdentifier: 
   excelTableAsset: {fileID: -944628639613478452, guid: e5791855362604054b1001494957ca00, type: 3}
   sheetName: EnemySentenceSheet

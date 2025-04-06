@@ -25,9 +25,6 @@ namespace _DeepChat.Scripts.Logic
 
         [SerializeField] private EmoticonBank playerEmoticonBank;
 
-        // [SerializeField] private float npcMessageSpan = 5.0f;
-        [SerializeField] private MessageBank npcMessageBank;
-
         [Header("Config")] [SerializeField] private bool runOnStart;
 
         private bool _isRunning;
@@ -57,8 +54,8 @@ namespace _DeepChat.Scripts.Logic
 
             while (_isRunning)
             {
-                var index = Random.Range(0, npcMessageBank.messages.Count);
-                var message = npcMessageBank.messages[index];
+                var index = Random.Range(0, gameRule.npcMessageBank.messages.Count);
+                var message = gameRule.npcMessageBank.messages[index];
                 messages.Append(ActorType.Npc, message.content);
 
                 yield return new WaitUntil(() => _npcMessageTimeout);
@@ -104,7 +101,7 @@ namespace _DeepChat.Scripts.Logic
         {
             while (_playerEmoticons.Count < gameRule.maxEmoticonCount)
             {
-                var emoticon = gameRule.SampleEmoticon(playerEmoticonBank,
+                var emoticon = gameRule.SampleEmoticon(
                     sizeType => _playerEmoticons.Any(e => e.size == sizeType));
                 _playerEmoticons.Add(emoticon);
             }
