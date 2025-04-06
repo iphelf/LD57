@@ -5,7 +5,6 @@ using System.Threading;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace _DeepChat.Scripts.Logic
 {
@@ -17,6 +16,7 @@ namespace _DeepChat.Scripts.Logic
         private int _score;
         private MessageSampler _npcMessageSampler;
         private readonly List<Emoticon> _playerEmoticons = new();
+        private int _remainingEmoticons;
 
         public async Awaitable Run(CancellationToken token, GameRule rule, IChatGameView view)
         {
@@ -24,10 +24,11 @@ namespace _DeepChat.Scripts.Logic
             _view = view;
 
             _npcMessageSampler = new MessageSampler(_rule.npcMessageBank);
+            _remainingEmoticons = rule.maxEmotionCountInDeck;
 
             try
             {
-                await AsyncRefillPlayerEmoticons(token);
+                await AsyncFillPlayerEmoticons(token);
 
                 while (!token.IsCancellationRequested)
                 {
@@ -70,21 +71,34 @@ namespace _DeepChat.Scripts.Logic
             }
         }
 
-        private async Awaitable AsyncRefillPlayerEmoticons(CancellationToken token)
+        private async Awaitable AsyncFillPlayerEmoticons(CancellationToken token)
         {
-            while (_playerEmoticons.Count < _rule.maxEmoticonCount)
+            for (var i = 0; i < _rule.maxEmoticonCountInHand; ++i)
             {
                 var emoticon = _rule.SampleEmoticon(
                     sizeType => _playerEmoticons.Any(e => e.size == sizeType));
                 _playerEmoticons.Add(emoticon);
             }
 
-            await _view.AsyncRefreshPlayerEmoticons(token, _playerEmoticons);
+            await _view.AsyncRefreshPlayerEmoticons(token, _playerEmoticons, _remainingEmoticons);
         }
 
-        private EmotionType GetEmotion(IEnumerable<EmotionType> emotionTypes)
+        private async Awaitable AsyncRefillPlayerEmoticons(CancellationToken token)
         {
-            EmotionType lastEmotion = EmotionType.None;
+            while (_remainingEmoticons > 0 && _playerEmoticons.Count < _rule.maxEmoticonCountInHand)
+            {
+                --_remainingEmoticons;
+                var emoticon = _rule.SampleEmoticon(
+                    sizeType => _playerEmoticons.Any(e => e.size == sizeType));
+                _playerEmoticons.Add(emoticon);
+            }
+
+            await _view.AsyncRefreshPlayerEmoticons(token, _playerEmoticons, _remainingEmoticons);
+        }
+
+        private static EmotionType GetEmotion(IEnumerable<EmotionType> emotionTypes)
+        {
+            var lastEmotion = EmotionType.None;
             foreach (var emotionType in emotionTypes)
             {
                 if (lastEmotion == EmotionType.None)

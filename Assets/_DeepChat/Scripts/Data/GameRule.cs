@@ -2,6 +2,7 @@
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _DeepChat.Scripts.Data
@@ -52,7 +53,8 @@ namespace _DeepChat.Scripts.Data
         }
 
         [Header("语料投放")] public EmoticonBank playerEmoticonBank;
-        public int maxEmoticonCount = 8;
+        [FormerlySerializedAs("maxEmoticonCount")] public int maxEmoticonCountInHand = 8;
+        public int maxEmotionCountInDeck = 30;
         public float shortBaseWeight = 4.5f;
         public float mediumBaseWeight = 4.0f;
         public float longBaseWeight = 1.5f;

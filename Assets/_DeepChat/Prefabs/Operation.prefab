@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13.2202, y: 3.1477}
+  m_AnchoredPosition: {x: -13.2202, y: 3.1476974}
   m_SizeDelta: {x: 76.7798, y: 6.2954}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6506228792651489198
@@ -439,8 +439,9 @@ GameObject:
   - component: {fileID: 7548806136908041783}
   - component: {fileID: 7909679743783866498}
   - component: {fileID: 3067503851041441043}
+  - component: {fileID: 2189764391993911244}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Power
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,3 +505,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2189764391993911244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8310931644753217292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142302e6558347428a8ba89b4e1980a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 7106838009508836173}

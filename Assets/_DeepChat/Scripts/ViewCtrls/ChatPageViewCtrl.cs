@@ -5,7 +5,6 @@ using System.Threading;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +21,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private EmoticonListViewCtrl emoticons;
         [SerializeField] private Button sendButton;
         [SerializeField] private ScoreViewCtrl score;
+        [SerializeField] private PowerViewCtrl power;
         [SerializeField] private InputFieldViewCtrl inputField;
         [SerializeField] private CountdownViewCtrl countdown;
 
@@ -103,9 +103,11 @@ namespace _DeepChat.Scripts.ViewCtrls
             score.UpdateScore(newScore);
         }
 
-        public async Awaitable AsyncRefreshPlayerEmoticons(CancellationToken token, List<Emoticon> newEmoticons)
+        public async Awaitable AsyncRefreshPlayerEmoticons(
+            CancellationToken token, List<Emoticon> newEmoticons, int newPower)
         {
             emoticons.SetEmoticons(newEmoticons);
+            power.SetValue(newPower);
         }
 
         public float GetMessageWidthDifference()
