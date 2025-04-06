@@ -15,6 +15,7 @@ namespace _DeepChat.Scripts.Logic
         private IChatGameView _view;
 
         private int _score;
+        private MessageSampler _npcMessageSampler;
         private readonly List<Emoticon> _playerEmoticons = new();
 
         public async Awaitable Run(CancellationToken token, GameRule rule, IChatGameView view)
@@ -22,14 +23,15 @@ namespace _DeepChat.Scripts.Logic
             _rule = rule;
             _view = view;
 
+            _npcMessageSampler = new MessageSampler(_rule.npcMessageBank);
+
             try
             {
                 await AsyncRefillPlayerEmoticons(token);
 
                 while (!token.IsCancellationRequested)
                 {
-                    var index = Random.Range(0, _rule.npcMessageBank.messages.Count);
-                    var message = _rule.npcMessageBank.messages[index];
+                    var message = _npcMessageSampler.Sample();
                     await _view.AsyncNpcSendMessage(token, message);
 
                     var selectedEmoticons = await _view.AsyncWaitForPlayerAction(token, _rule.npcMaxWaitDuration);

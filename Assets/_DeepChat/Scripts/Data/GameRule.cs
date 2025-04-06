@@ -17,16 +17,6 @@ namespace _DeepChat.Scripts.Data
         public int terribleMatchScore = -15;
         public int emotionBonusMatchScore = 5;
 
-        public int GetScoreChange(float distance)
-        {
-            if (distance < perfectMatchBound)
-                return perfectMatchScore;
-            else if (distance < goodMatchBound)
-                return goodMatchScore;
-            else
-                return badMatchScore;
-        }
-
         public Rating RateTurnActionResult(TurnActionResult actionResult)
         {
             Rating rating = new();
@@ -101,5 +91,6 @@ namespace _DeepChat.Scripts.Data
 
         [Header("NPC消息")] public MessageBank npcMessageBank;
         public float npcMaxWaitDuration = 5.0f;
+        public int minConsecutiveUniqueSampleCount = 7;
     }
 }
