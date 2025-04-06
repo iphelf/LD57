@@ -53,7 +53,7 @@ namespace _DeepChat.Scripts.Data
         }
 
         [Header("语料投放")] public EmoticonBank playerEmoticonBank;
-        [FormerlySerializedAs("maxEmoticonCount")] public int maxEmoticonCountInHand = 8;
+        public int maxEmoticonCountInHand = 8;
         public int maxEmotionCountInDeck = 30;
         public float shortBaseWeight = 4.5f;
         public float mediumBaseWeight = 4.0f;
@@ -93,6 +93,5 @@ namespace _DeepChat.Scripts.Data
 
         [Header("NPC消息")] public MessageBank npcMessageBank;
         public float npcMaxWaitDuration = 5.0f;
-        public int minConsecutiveUniqueSampleCount = 7;
     }
 }
