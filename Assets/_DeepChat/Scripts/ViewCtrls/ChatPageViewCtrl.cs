@@ -84,12 +84,14 @@ namespace _DeepChat.Scripts.ViewCtrls
             await messages.AsyncAppendNpcMessage(token, message.content);
         }
 
-        public Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
+        public async Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
         {
             inputField.SetAsHintingInput();
             _waitingPlayerAction = new AwaitableCompletionSource<List<Emoticon>>();
             countdown.StartCountdown(maxWaitSeconds, () => FinishPlayerAction(false));
-            return _waitingPlayerAction.Awaitable;
+            await messages.AsyncScrollToBottom(token);
+            var selectedEmoticons = await _waitingPlayerAction.Awaitable;
+            return selectedEmoticons;
         }
 
         public async Awaitable AsyncPlayerSendMessage(CancellationToken token, string messageContent)

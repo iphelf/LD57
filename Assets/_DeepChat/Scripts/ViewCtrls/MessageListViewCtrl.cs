@@ -36,15 +36,14 @@ namespace _DeepChat.Scripts.ViewCtrls
             var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
             messageViewCtrl.SetContent(message ?? playerBusyStr);
             messages.Add(messageViewCtrl);
-            await Awaitable.EndOfFrameAsync(token);
-            ScrollToBottom();
+            await AsyncScrollToBottom(token);
         }
 
         public async Awaitable AsyncAppendPlayerBusyMessage(CancellationToken token)
         {
             Instantiate(playerBusyMessagePrefab, listRoot);
             await Awaitable.EndOfFrameAsync(token);
-            ScrollToBottom();
+            await AsyncScrollToBottom(token);
         }
 
         public async Awaitable AsyncAppendNpcMessage(CancellationToken token, string message)
@@ -53,8 +52,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
             messageViewCtrl.SetContent(message ?? playerBusyStr);
             messages.Add(messageViewCtrl);
-            await Awaitable.EndOfFrameAsync(token);
-            ScrollToBottom();
+            await AsyncScrollToBottom(token);
         }
 
         public async Awaitable AsyncMatchMessagePair(CancellationToken token)
@@ -69,20 +67,11 @@ namespace _DeepChat.Scripts.ViewCtrls
             await AsyncAppendNpcMessage(token, content);
         }
 
-        public void AppendMessage(ActorType actorType, [CanBeNull] string message)
+        public async Awaitable AsyncScrollToBottom(CancellationToken token)
         {
-            var messagePrefab = actorType == ActorType.Player ? playerMessagePrefab : npcMessagePrefab;
-            var go = Instantiate(messagePrefab, listRoot);
-            var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
-            messageViewCtrl.SetContent(message ?? playerBusyStr);
-            messages.Add(messageViewCtrl);
-            ScrollToBottom();
-        }
-
-        private void ScrollToBottom()
-        {
-            scrollRect.normalizedPosition = new Vector2(0, 0);
             Canvas.ForceUpdateCanvases();
+            await Awaitable.EndOfFrameAsync(token);
+            scrollRect.normalizedPosition = new Vector2(0, 0);
         }
 
         public float GetDifferenceAgainstTarget()
