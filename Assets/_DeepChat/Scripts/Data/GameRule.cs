@@ -63,6 +63,7 @@ namespace _DeepChat.Scripts.Data
             return playerEmoticonBank.SampleBySize(SizeType.Long);
         }
 
-        [Header("NPC回复")] public MessageBank npcMessageBank;
+        [Header("NPC消息")] public MessageBank npcMessageBank;
+        public float npcMaxWaitDuration = 5.0f;
     }
 }

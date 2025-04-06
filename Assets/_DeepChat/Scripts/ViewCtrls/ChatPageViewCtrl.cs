@@ -16,6 +16,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private Button sendButton;
         [SerializeField] private ScoreViewCtrl score;
         [SerializeField] private InputFieldViewCtrl inputField;
+        [SerializeField] private CountdownViewCtrl countdown;
 
         [Header("Logic Components")] [SerializeField]
         private ChatGameCtrl game;
