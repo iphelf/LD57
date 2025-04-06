@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameRule: {fileID: 11400000, guid: 5f117f1f62006974fbe113041258854c, type: 2}
-  runOnStart: 0
+  runOnStart: 1
   messages: {fileID: 3769262000791549505}
   emoticons: {fileID: 6494140293467741769}
   sendButton: {fileID: 6135604224982272135}

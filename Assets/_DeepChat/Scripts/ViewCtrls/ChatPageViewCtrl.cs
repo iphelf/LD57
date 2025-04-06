@@ -27,6 +27,8 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         private AwaitableCompletionSource<List<Emoticon>> _waitingPlayerAction;
 
+        public event Action OnClose;
+
         private void Awake()
         {
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);

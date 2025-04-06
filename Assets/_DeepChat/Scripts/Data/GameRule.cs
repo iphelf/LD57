@@ -2,7 +2,6 @@
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _DeepChat.Scripts.Data
