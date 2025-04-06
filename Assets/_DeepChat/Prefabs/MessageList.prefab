@@ -371,11 +371,11 @@ MonoBehaviour:
   playerMessagePrefab: {fileID: 2616092424507997681, guid: bf921e5526aa72c49b8ea7fc52b8dcbb, type: 3}
   playerBusyMessagePrefab: {fileID: 4379652827491338144, guid: 8195750c8adac5c4c8123c5bdf5e941f, type: 3}
   npcMessagePrefab: {fileID: 6434758871078733479, guid: d105a3fa86b7a8d40843277a0bbfaad5, type: 3}
+  mismatchIndicatorPrefab: {fileID: 5758895340964806009, guid: a8892fa597cd2d34f93c3285c7e3fe60, type: 3}
   targetReference: {fileID: 6798790763642670337}
   targetWidthCorrection: 0
-  playerBusyStr: The server is busy, please try again later...
-  messages: []
   clearOnAwake: 1
+  messages: []
 --- !u!222 &4880918143372612619
 CanvasRenderer:
   m_ObjectHideFlags: 0

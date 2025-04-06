@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5907039167986642549}
   - component: {fileID: 684958976774449524}
   - component: {fileID: 4233506324893199810}
+  - component: {fileID: 1581509545270088864}
+  - component: {fileID: 8440588459602315380}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -88,6 +90,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1025672808367829431}
   content: {fileID: 423142104695868133}
+  canvasGroup: {fileID: 8440588459602315380}
+  layoutElement: {fileID: 1581509545270088864}
   OnDataUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -103,6 +107,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1581509545270088864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159037138103478444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!225 &8440588459602315380
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159037138103478444}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6212218665790780158
 GameObject:
   m_ObjectHideFlags: 0

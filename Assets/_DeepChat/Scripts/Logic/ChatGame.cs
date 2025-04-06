@@ -62,7 +62,7 @@ namespace _DeepChat.Scripts.Logic
                         Debug.Log($"Difference against target width: {turnActionResult.MatchWidthDiff:F2}");
                     var rating = _rule.RateTurnActionResult(turnActionResult);
                     _score += rating.WidthMatchScore + rating.EmotionMatchScore;
-                    await _view.AsyncPresentTurnResult(token, rating, _score);
+                    await _view.AsyncPresentTurnResult(token, turnActionResult, rating, _score);
                     await AsyncRefillPlayerEmoticons(token);
                 }
             }

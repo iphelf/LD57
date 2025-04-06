@@ -4,7 +4,6 @@ namespace _DeepChat.Scripts.Logic
 {
     public class Rating
     {
-        public bool IsTimeout;
         public WidthMatchResultType WidthMatchResult;
         public int WidthMatchScore;
         public EmotionType NpcEmotion;
