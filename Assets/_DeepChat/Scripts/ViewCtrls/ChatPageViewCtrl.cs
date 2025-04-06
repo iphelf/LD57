@@ -12,7 +12,6 @@ namespace _DeepChat.Scripts.ViewCtrls
     public class ChatPageViewCtrl : MonoBehaviour, IChatGameView
     {
         [SerializeField] private GameRule gameRule;
-        [SerializeField] private bool runOnStart;
 
         [Header("UI Components")] [SerializeField]
         private Button closeButton;
@@ -26,37 +25,40 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private InputFieldViewCtrl inputField;
         [SerializeField] private CountdownViewCtrl countdown;
 
+        [Header("UI Dialogs")] [SerializeField]
+        private EndingDialogViewCtrl endingDialog;
+
         private AwaitableCompletionSource<List<Emoticon>> _waitingPlayerAction;
 
         public event Action OnClose;
 
         private void Awake()
         {
-            closeButton.onClick.AddListener(() =>
-            {
-                Destroy(gameObject);
-                OnClose?.Invoke();
-            });
+            closeButton.onClick.AddListener(() => Destroy(gameObject));
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);
             emoticons.SelectionChanged += OnPlayerEmoticonSelectionChanged;
+
+            endingDialog.OnRestartButtonClicked += () => StartCoroutine(LaunchGame());
+            endingDialog.OnExitButtonClicked += () => Destroy(gameObject);
         }
 
-        private async void Start()
+        private void Start()
+        {
+            StartCoroutine(LaunchGame());
+        }
+
+        private void OnDestroy()
+        {
+            OnClose?.Invoke();
+        }
+
+        private async Awaitable LaunchGame()
         {
             try
             {
-                if (!runOnStart)
-                    return;
                 var game = new ChatGame();
                 var goodResult = await game.Run(destroyCancellationToken, gameRule, this);
-                if (goodResult)
-                {
-                    Debug.Log("Good End");
-                }
-                else
-                {
-                    Debug.Log("Bad End");
-                }
+                endingDialog.OpenEnding(goodResult);
             }
             catch (Exception e)
             {
@@ -91,6 +93,11 @@ namespace _DeepChat.Scripts.ViewCtrls
         {
             var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
             inputField.SetContent(selectedEmoticons);
+        }
+
+        public void Reset()
+        {
+            messages.Clear();
         }
 
         public async Awaitable AsyncNpcSendMessage(CancellationToken token, Message message)

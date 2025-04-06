@@ -7,6 +7,7 @@ namespace _DeepChat.Scripts.Logic
 {
     public interface IChatGameView
     {
+        public void Reset();
         public Awaitable AsyncNpcSendMessage(CancellationToken token, Message message);
         public Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds);
         public Awaitable AsyncPlayerSendMessage(CancellationToken token, [CanBeNull] string messageContent);

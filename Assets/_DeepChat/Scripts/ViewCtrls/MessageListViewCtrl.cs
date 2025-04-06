@@ -196,7 +196,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         }
 
         [Button]
-        private void Clear()
+        public void Clear()
         {
             foreach (var message in messages)
                 Destroy(message.gameObject);

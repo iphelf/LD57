@@ -25,6 +25,7 @@ namespace _DeepChat.Scripts.Logic
             _npcMessageSampler = new MessageSampler(_rule.npcMessageBank);
             _remainingEmoticons = rule.maxEmotionCountInDeck;
 
+            _view.Reset();
             await _view.AsyncPresentNewScore(0, _rule.minScoreForHappyEnd);
             await AsyncFillPlayerEmoticons(token);
 
