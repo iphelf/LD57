@@ -26,7 +26,9 @@ namespace _DeepChat.Scripts.Logic
             _remainingEmoticons = rule.maxEmotionCountInDeck;
 
             _view.Reset();
-            await _view.AsyncPresentNewScore(0, _rule.minScoreForHappyEnd);
+            _score = _rule.initialScore;
+
+            await _view.AsyncPresentNewScore(_score, _rule.minScoreForHappyEnd);
             await AsyncFillPlayerEmoticons(token);
 
             while (!token.IsCancellationRequested)
@@ -69,7 +71,7 @@ namespace _DeepChat.Scripts.Logic
                     return true;
                 }
 
-                if (_score <= _rule.maxScoreForBadEnd)
+                if (_score <= _rule.maxScoreForBadEnd || _playerEmoticons.Count + _remainingEmoticons <= 0)
                 {
                     return false;
                 }
