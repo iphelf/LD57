@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f34e9e3d3af49d34a8d60f90df500397
+guid: 2c8e325373adcd2418a00d9059e870b6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3414745213606491656
-    second: "\u7CDF\u7CD5\u5F97\u5206\u7231\u5FC3_0"
+      213: -8427623375307304995
+    second: EmotionBlueSad_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u7CDF\u7CD5\u5F97\u5206\u7231\u5FC3_0"
+      name: EmotionBlueSad_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 28
-        height: 27
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 806fa7ffdac936f20800000000000000
-      internalID: 3414745213606491656
+      spriteID: ddf870e01311b0b80800000000000000
+      internalID: -8427623375307304995
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\u7CDF\u7CD5\u5F97\u5206\u7231\u5FC3_0": 3414745213606491656
+      EmotionBlueSad_0: -8427623375307304995
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

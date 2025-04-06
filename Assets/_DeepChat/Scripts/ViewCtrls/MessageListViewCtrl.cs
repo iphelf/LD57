@@ -18,6 +18,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [Header("消息框")] [SerializeField] private GameObject playerMessagePrefab;
         [SerializeField] private GameObject playerBusyMessagePrefab;
         [SerializeField] private GameObject npcMessagePrefab;
+        [SerializeField] private GameObject ratingMessagePrefab;
 
         [Header("匹配")] [SerializeField] private GameObject perfectMatchIndicatorPrefab;
         [SerializeField] private GameObject goodMismatchIndicatorPrefab;
@@ -28,7 +29,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         [Header("Config")] [SerializeField] private bool clearOnAwake = true;
 
-        [SerializeField, ReadOnly] private List<MessageViewCtrl> messages;
+        [SerializeField, ReadOnly] private List<TextMessageViewCtrl> messages;
 
         private void Awake()
         {
@@ -39,7 +40,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         public async Awaitable AsyncAppendPlayerMessage(CancellationToken token, string message)
         {
             var go = Instantiate(playerMessagePrefab, listRoot);
-            var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
+            var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
             messages.Add(messageViewCtrl);
             await AsyncScrollToBottom(token);
@@ -55,7 +56,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         public async Awaitable AsyncAppendNpcMessage(CancellationToken token, string message)
         {
             var go = Instantiate(npcMessagePrefab, listRoot);
-            var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
+            var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
             messages.Add(messageViewCtrl);
             await AsyncScrollToBottom(token);
@@ -69,8 +70,8 @@ namespace _DeepChat.Scripts.ViewCtrls
             var indicatorPrefab = GetMismatchIndicatorPrefab(widthMatchResult);
             var indicator = InstantiateMismatchIndicator(indicatorPrefab, m1, m2);
 
-            var m1Clone = Instantiate(m1.gameObject, listRoot, true).GetComponent<MessageViewCtrl>();
-            var m2Clone = Instantiate(m2.gameObject, listRoot, true).GetComponent<MessageViewCtrl>();
+            var m1Clone = Instantiate(m1.gameObject, listRoot, true).GetComponent<TextMessageViewCtrl>();
+            var m2Clone = Instantiate(m2.gameObject, listRoot, true).GetComponent<TextMessageViewCtrl>();
             m1Clone.GetCanvasGroup().alpha = 0.0f;
             m2Clone.GetCanvasGroup().alpha = 0.0f;
             await AsyncPlayMatchAnimation(token, m1, m2, indicator, enableTransparency);
@@ -93,8 +94,8 @@ namespace _DeepChat.Scripts.ViewCtrls
             }
         }
 
-        private MismatchIndicatorViewCtrl InstantiateMismatchIndicator(GameObject prefab, MessageViewCtrl m1,
-            MessageViewCtrl m2)
+        private MismatchIndicatorViewCtrl InstantiateMismatchIndicator(GameObject prefab, TextMessageViewCtrl m1,
+            TextMessageViewCtrl m2)
         {
             var m1TopRight = ConvertFromMessageLocalPositionToListLocalPosition(
                 m1.GetContent(), m1.GetContent().rect.max, listRoot);
@@ -111,7 +112,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         private async Awaitable AsyncPlayMatchAnimation(
             CancellationToken token,
-            MessageViewCtrl m1, MessageViewCtrl m2, MismatchIndicatorViewCtrl indicator,
+            TextMessageViewCtrl m1, TextMessageViewCtrl m2, MismatchIndicatorViewCtrl indicator,
             bool makeM1SemiTransparent)
         {
             m2.SetLayoutEnabled(false);
@@ -127,7 +128,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             const float joinDuration = 1.0f;
             if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(0.5f, joinDuration).Play();
+                m1.GetCanvasGroup().DOFade(0.8f, joinDuration).Play();
             var targetY = (m1OriginalY + m2OriginalY) * 0.5f;
             m1Transform.DOLocalMoveY(targetY, joinDuration).Play();
             m2Transform.DOLocalMoveY(targetY, joinDuration).Play();
@@ -154,9 +155,10 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncAppendRating(CancellationToken token, Rating rating)
         {
-            var content =
-                $"width_match={rating.WidthMatchResult.ToString()}, score={rating.WidthMatchScore}, emotion={rating.NpcEmotion.ToString()}, emotion_match={rating.IsEmotionMatched}, bonus={rating.EmotionMatchScore}";
-            await AsyncAppendNpcMessage(token, content);
+            var go = Instantiate(ratingMessagePrefab, listRoot);
+            var ratingMessageViewCtrl = go.GetComponent<RatingMessageViewCtrl>();
+            ratingMessageViewCtrl.SetContent(rating);
+            await AsyncScrollToBottom(token);
         }
 
         public async Awaitable AsyncScrollToBottom(CancellationToken token)
