@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _DeepChat.Scripts.Logic;
 using NaughtyAttributes;
@@ -14,6 +15,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private bool clearOnAwake;
 
         private readonly List<EmoticonViewCtrl> _emoticons = new();
+        public event Action SelectionChanged;
 
         private void Awake()
         {
@@ -35,6 +37,7 @@ namespace _DeepChat.Scripts.ViewCtrls
                 var go = Instantiate(emoticonPrefab, listRoot);
                 var view = go.GetComponent<EmoticonViewCtrl>();
                 view.SetContent(emoticon);
+                view.CheckStateChanged += SelectionStateChangedByUser;
                 _emoticons.Add(view);
             }
         }
@@ -48,6 +51,11 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             for (var i = listRoot.childCount - 1; i >= 0; --i)
                 Destroy(listRoot.GetChild(i).gameObject);
+        }
+
+        private void SelectionStateChangedByUser()
+        {
+            SelectionChanged?.Invoke();
         }
     }
 }

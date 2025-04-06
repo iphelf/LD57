@@ -1,31 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
-using _DeepChat.Scripts.ViewCtrls;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace _DeepChat.Scripts.Logic
 {
     public class ChatGameCtrl : MonoBehaviour
     {
-        [Header("Components")] [SerializeField]
-        private MessageListViewCtrl messages;
-
-        [SerializeField] private EmoticonListViewCtrl emoticons;
-        [SerializeField] private Button sendButton;
-        [SerializeField] private ScoreViewCtrl score;
-
-        [Header("Data")] [SerializeField] private GameRule gameRule;
-
-        [SerializeField] private EmoticonBank playerEmoticonBank;
-
-        [Header("Config")] [SerializeField] private bool runOnStart;
+        [Header("Config")] [SerializeField] private GameRule gameRule;
+        [SerializeField] private bool runOnStart;
 
         private bool _isRunning;
 
@@ -34,10 +22,11 @@ namespace _DeepChat.Scripts.Logic
 
         private bool _npcMessageTimeout;
 
-        private void Awake()
-        {
-            sendButton.onClick.AddListener(PlayerSendMessage);
-        }
+        public event Action<int> ScoreChanged;
+        public event Action<List<Emoticon>> PlayerEmoticonsChanged;
+        public event Action PlayerTurnBegin;
+        public event Action PlayerTurnEnd;
+        public event Action<string> NpcMessageSent;
 
         private void Start()
         {
@@ -56,7 +45,9 @@ namespace _DeepChat.Scripts.Logic
             {
                 var index = Random.Range(0, gameRule.npcMessageBank.messages.Count);
                 var message = gameRule.npcMessageBank.messages[index];
-                messages.Append(ActorType.Npc, message.content);
+                NpcMessageSent?.Invoke(message.content);
+
+                PlayerTurnBegin?.Invoke();
 
                 yield return new WaitUntil(() => _npcMessageTimeout);
                 _npcMessageTimeout = false;
@@ -77,22 +68,23 @@ namespace _DeepChat.Scripts.Logic
             _isRunning = false;
         }
 
-        private void PlayerSendMessage()
+        public string PlayerSendMessage(Emoticon[] selectedEmoticons)
         {
-            var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
             for (var i = _playerEmoticons.Count - 1; i >= 0; --i)
                 if (selectedEmoticons.Contains(_playerEmoticons[i]))
                     _playerEmoticons.RemoveAt(i);
 
             var message = string.Concat(selectedEmoticons.Select(e => e.content));
-            messages.Append(ActorType.Player, message);
+            return message;
+        }
 
-            var diff = messages.GetDifferenceAgainstTarget();
-            Debug.Log($"Difference against target width: {diff:F2}");
-            var dist = Mathf.Abs(diff);
-            var scoreChange = gameRule.GetScoreChange(dist);
+        public void SettleTurn(float distance)
+        {
+            PlayerTurnEnd?.Invoke();
+
+            var scoreChange = gameRule.GetScoreChange(distance);
             _score += scoreChange;
-            score.UpdateScore(_score);
+            ScoreChanged?.Invoke(_score);
 
             RefillPlayerEmoticons();
         }
@@ -106,7 +98,7 @@ namespace _DeepChat.Scripts.Logic
                 _playerEmoticons.Add(emoticon);
             }
 
-            emoticons.SetEmoticons(_playerEmoticons);
+            PlayerEmoticonsChanged?.Invoke(_playerEmoticons);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using _DeepChat.Scripts.Logic;
+﻿using System;
+using _DeepChat.Scripts.Logic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,12 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private TMP_Text text;
 
         public Emoticon Content { get; private set; }
+        public event Action CheckStateChanged;
+
+        private void Awake()
+        {
+            toggle.onValueChanged.AddListener(OnToggleValueChanged);
+        }
 
         public void SetContent(Emoticon emoticon)
         {
@@ -21,6 +28,11 @@ namespace _DeepChat.Scripts.ViewCtrls
         public bool IsChecked()
         {
             return toggle.isOn;
+        }
+
+        private void OnToggleValueChanged(bool isOn)
+        {
+            CheckStateChanged?.Invoke();
         }
     }
 }
