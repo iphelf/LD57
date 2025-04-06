@@ -17,6 +17,8 @@ MonoBehaviour:
   perfectMatchScore: 25
   goodMatchScore: 10
   badMatchScore: -5
+  terribleMatchScore: -15
+  emotionBonusMatchScore: 5
   playerEmoticonBank: {fileID: 11400000, guid: edfb007cdf6bdab429d289d9c687bfb1, type: 2}
   maxEmoticonCount: 8
   shortBaseWeight: 4.5
@@ -26,4 +28,4 @@ MonoBehaviour:
   mediumBonusWeight: 1
   longBonusWeight: 3
   npcMessageBank: {fileID: 11400000, guid: 866df3683d2647a4794246714e308b44, type: 2}
-  npcMaxWaitDuration: 5
+  npcMaxWaitDuration: 8.5
