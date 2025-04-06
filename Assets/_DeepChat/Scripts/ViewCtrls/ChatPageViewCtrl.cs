@@ -97,9 +97,9 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncPresentTurnResult(CancellationToken token, Rating rating, int newScore)
         {
-            // var content =
-            //     $"width_match={rating.WidthMatchResult.ToString()}, score={rating.WidthMatchScore}, emotion={rating.NpcEmotion.ToString()}, emotion_match={rating.IsEmotionMatched}, bonus={rating.EmotionMatchScore}";
-            // messages.Append(ActorType.Npc, content);
+            var content =
+                $"width_match={rating.WidthMatchResult.ToString()}, score={rating.WidthMatchScore}, emotion={rating.NpcEmotion.ToString()}, emotion_match={rating.IsEmotionMatched}, bonus={rating.EmotionMatchScore}";
+            messages.AppendMessage(ActorType.Npc, content);
             score.UpdateScore(newScore);
         }
 

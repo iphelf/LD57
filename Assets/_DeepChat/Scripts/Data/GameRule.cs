@@ -14,6 +14,8 @@ namespace _DeepChat.Scripts.Data
         public int perfectMatchScore = 20;
         public int goodMatchScore = 10;
         public int badMatchScore = -10;
+        public int terribleMatchScore = -15;
+        public int emotionBonusMatchScore = 5;
 
         public int GetScoreChange(float distance)
         {
@@ -23,6 +25,40 @@ namespace _DeepChat.Scripts.Data
                 return goodMatchScore;
             else
                 return badMatchScore;
+        }
+
+        public Rating RateTurnActionResult(TurnActionResult actionResult)
+        {
+            Rating rating = new();
+            if (actionResult.IsTimeout)
+            {
+                rating.WidthMatchResult = WidthMatchResultType.Terrible;
+                rating.WidthMatchScore = terribleMatchScore;
+            }
+            else
+            {
+                var distance = Mathf.Abs(actionResult.MatchWidthDiff);
+                if (distance < perfectMatchBound)
+                {
+                    rating.WidthMatchResult = WidthMatchResultType.Perfect;
+                    rating.WidthMatchScore = perfectMatchScore;
+                }
+                else if (distance < goodMatchBound)
+                {
+                    rating.WidthMatchResult = WidthMatchResultType.Good;
+                    rating.WidthMatchScore = goodMatchScore;
+                }
+                else
+                {
+                    rating.WidthMatchResult = WidthMatchResultType.Bad;
+                    rating.WidthMatchScore = badMatchScore;
+                }
+            }
+
+            rating.NpcEmotion = actionResult.NpcEmotion;
+            rating.IsEmotionMatched = actionResult.PlayerEmotion == actionResult.NpcEmotion;
+            rating.EmotionMatchScore = rating.IsEmotionMatched ? emotionBonusMatchScore : 0;
+            return rating;
         }
 
         [Header("语料投放")] public EmoticonBank playerEmoticonBank;
