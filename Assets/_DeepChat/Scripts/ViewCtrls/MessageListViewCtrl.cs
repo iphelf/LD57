@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _DeepChat.Scripts.Common;
+using _DeepChat.Scripts.Logic;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;

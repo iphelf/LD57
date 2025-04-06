@@ -59,7 +59,7 @@ namespace _DeepChat.Scripts.Logic
             {
                 var index = Random.Range(0, npcMessageBank.messages.Count);
                 var message = npcMessageBank.messages[index];
-                messages.Append(ActorType.Npc, message);
+                messages.Append(ActorType.Npc, message.content);
 
                 yield return new WaitUntil(() => _npcMessageTimeout);
                 _npcMessageTimeout = false;
@@ -67,6 +67,7 @@ namespace _DeepChat.Scripts.Logic
         }
 
         [Button(enabledMode: EButtonEnableMode.Playmode)]
+        [UsedImplicitly]
         private void NextNpcMessage()
         {
             _npcMessageTimeout = true;

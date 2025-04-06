@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,6 +19,7 @@ namespace _DeepChat.Scripts.Data
         private Dictionary<SizeType, List<Emoticon>> _emoticonsOfSize;
 
         [Button]
+        [UsedImplicitly]
         private void ImportFromExcel()
         {
             var sheet = excelTableAsset.SheetDict[sheetName];
@@ -40,7 +42,6 @@ namespace _DeepChat.Scripts.Data
         private void OnValidate()
         {
             _emoticonsOfSize = new Dictionary<SizeType, List<Emoticon>>();
-            Debug.Log($"{nameof(EmoticonBank)} is Awake");
             foreach (var emoticon in emoticons)
             {
                 if (!_emoticonsOfSize.ContainsKey(emoticon.size))
