@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using _DeepChat.Scripts.Common;
+using _DeepChat.Scripts.Logic;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
@@ -12,6 +14,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private Transform listRoot;
         [SerializeField] private GameObject playerMessagePrefab;
+        [SerializeField] private GameObject playerBusyMessagePrefab;
         [SerializeField] private GameObject npcMessagePrefab;
         [SerializeField] private LayoutGroup targetReference;
         [SerializeField] private float targetWidthCorrection;
@@ -27,6 +30,45 @@ namespace _DeepChat.Scripts.ViewCtrls
                 Clear();
         }
 
+        public async Awaitable AsyncAppendPlayerMessage(CancellationToken token, string message)
+        {
+            var go = Instantiate(playerMessagePrefab, listRoot);
+            var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
+            messageViewCtrl.SetContent(message ?? playerBusyStr);
+            messages.Add(messageViewCtrl);
+            await Awaitable.EndOfFrameAsync(token);
+            ScrollToBottom();
+        }
+
+        public async Awaitable AsyncAppendPlayerBusyMessage(CancellationToken token)
+        {
+            Instantiate(playerBusyMessagePrefab, listRoot);
+            await Awaitable.EndOfFrameAsync(token);
+            ScrollToBottom();
+        }
+
+        public async Awaitable AsyncAppendNpcMessage(CancellationToken token, string message)
+        {
+            var go = Instantiate(npcMessagePrefab, listRoot);
+            var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
+            messageViewCtrl.SetContent(message ?? playerBusyStr);
+            messages.Add(messageViewCtrl);
+            await Awaitable.EndOfFrameAsync(token);
+            ScrollToBottom();
+        }
+
+        public async Awaitable AsyncMatchMessagePair(CancellationToken token)
+        {
+            await Awaitable.WaitForSecondsAsync(1.0f, token);
+        }
+
+        public async Awaitable AsyncAppendRating(CancellationToken token, Rating rating)
+        {
+            var content =
+                $"width_match={rating.WidthMatchResult.ToString()}, score={rating.WidthMatchScore}, emotion={rating.NpcEmotion.ToString()}, emotion_match={rating.IsEmotionMatched}, bonus={rating.EmotionMatchScore}";
+            await AsyncAppendNpcMessage(token, content);
+        }
+
         public void AppendMessage(ActorType actorType, [CanBeNull] string message)
         {
             var messagePrefab = actorType == ActorType.Player ? playerMessagePrefab : npcMessagePrefab;
@@ -34,6 +76,11 @@ namespace _DeepChat.Scripts.ViewCtrls
             var messageViewCtrl = go.GetComponent<MessageViewCtrl>();
             messageViewCtrl.SetContent(message ?? playerBusyStr);
             messages.Add(messageViewCtrl);
+            ScrollToBottom();
+        }
+
+        private void ScrollToBottom()
+        {
             scrollRect.normalizedPosition = new Vector2(0, 0);
             Canvas.ForceUpdateCanvases();
         }
@@ -52,7 +99,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         }
 
         [Button]
-        public void Clear()
+        private void Clear()
         {
             foreach (var message in messages)
                 Destroy(message.gameObject);
@@ -60,22 +107,6 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             for (var i = listRoot.childCount - 1; i >= 0; --i)
                 Destroy(listRoot.GetChild(i).gameObject);
-        }
-
-        [SerializeField] private string dummyMessage = string.Empty;
-
-        [Button(enabledMode: EButtonEnableMode.Playmode)]
-        [UsedImplicitly]
-        private void DebugAppendPlayerMessage()
-        {
-            AppendMessage(ActorType.Player, string.IsNullOrEmpty(dummyMessage) ? "Message from player" : dummyMessage);
-        }
-
-        [Button(enabledMode: EButtonEnableMode.Playmode)]
-        [UsedImplicitly]
-        private void DebugAppendNpcMessage()
-        {
-            AppendMessage(ActorType.Npc, string.IsNullOrEmpty(dummyMessage) ? "Message from NPC" : dummyMessage);
         }
     }
 }

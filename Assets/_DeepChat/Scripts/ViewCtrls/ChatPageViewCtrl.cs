@@ -81,7 +81,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncNpcSendMessage(CancellationToken token, Message message)
         {
-            messages.AppendMessage(ActorType.Npc, message.content);
+            await messages.AsyncAppendNpcMessage(token, message.content);
         }
 
         public Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
@@ -94,14 +94,16 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncPlayerSendMessage(CancellationToken token, string messageContent)
         {
-            messages.AppendMessage(ActorType.Player, messageContent);
+            if (messageContent == null)
+                await messages.AsyncAppendPlayerBusyMessage(token);
+            else
+                await messages.AsyncAppendPlayerMessage(token, messageContent);
         }
 
         public async Awaitable AsyncPresentTurnResult(CancellationToken token, Rating rating, int newScore)
         {
-            var content =
-                $"width_match={rating.WidthMatchResult.ToString()}, score={rating.WidthMatchScore}, emotion={rating.NpcEmotion.ToString()}, emotion_match={rating.IsEmotionMatched}, bonus={rating.EmotionMatchScore}";
-            messages.AppendMessage(ActorType.Npc, content);
+            await messages.AsyncMatchMessagePair(token);
+            await messages.AsyncAppendRating(token, rating);
             score.UpdateScore(newScore);
         }
 
