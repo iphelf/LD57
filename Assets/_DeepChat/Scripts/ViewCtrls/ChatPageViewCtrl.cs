@@ -106,7 +106,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             CancellationToken token, TurnActionResult actionResult, Rating rating, int newScore)
         {
             if (!actionResult.IsTimeout)
-                await messages.AsyncMatchMessagePair(token, actionResult.MatchWidthDiff > 0);
+                await messages.AsyncMatchMessagePair(token, rating.WidthMatchResult, actionResult.MatchWidthDiff > 0);
             await messages.AsyncAppendRating(token, rating);
             score.UpdateScore(newScore);
         }

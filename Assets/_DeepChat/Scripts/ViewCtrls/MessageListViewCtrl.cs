@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
 using DG.Tweening;
 using NaughtyAttributes;
@@ -12,10 +14,14 @@ namespace _DeepChat.Scripts.ViewCtrls
     {
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private RectTransform listRoot;
-        [SerializeField] private GameObject playerMessagePrefab;
+
+        [Header("消息框")] [SerializeField] private GameObject playerMessagePrefab;
         [SerializeField] private GameObject playerBusyMessagePrefab;
         [SerializeField] private GameObject npcMessagePrefab;
-        [SerializeField] private GameObject mismatchIndicatorPrefab;
+
+        [Header("匹配")] [SerializeField] private GameObject perfectMatchIndicatorPrefab;
+        [SerializeField] private GameObject goodMismatchIndicatorPrefab;
+        [SerializeField] private GameObject badMismatchIndicatorPrefab;
 
         [Header("宽度匹配计算")] [SerializeField] private LayoutGroup targetReference;
         [SerializeField] private float targetWidthCorrection;
@@ -55,11 +61,13 @@ namespace _DeepChat.Scripts.ViewCtrls
             await AsyncScrollToBottom(token);
         }
 
-        public async Awaitable AsyncMatchMessagePair(CancellationToken token, bool enableTransparency)
+        public async Awaitable AsyncMatchMessagePair(
+            CancellationToken token, WidthMatchResultType widthMatchResult, bool enableTransparency)
         {
             var m1 = messages[^2];
             var m2 = messages[^1];
-            var indicator = InstantiateMismatchIndicator(m1, m2);
+            var indicatorPrefab = GetMismatchIndicatorPrefab(widthMatchResult);
+            var indicator = InstantiateMismatchIndicator(indicatorPrefab, m1, m2);
 
             var m1Clone = Instantiate(m1.gameObject, listRoot, true).GetComponent<MessageViewCtrl>();
             var m2Clone = Instantiate(m2.gameObject, listRoot, true).GetComponent<MessageViewCtrl>();
@@ -70,7 +78,23 @@ namespace _DeepChat.Scripts.ViewCtrls
             Destroy(m2Clone.gameObject);
         }
 
-        private MismatchIndicatorViewCtrl InstantiateMismatchIndicator(MessageViewCtrl m1, MessageViewCtrl m2)
+        private GameObject GetMismatchIndicatorPrefab(WidthMatchResultType widthMatchResult)
+        {
+            switch (widthMatchResult)
+            {
+                case WidthMatchResultType.Perfect:
+                    return perfectMatchIndicatorPrefab;
+                case WidthMatchResultType.Good:
+                    return goodMismatchIndicatorPrefab;
+                case WidthMatchResultType.Bad:
+                case WidthMatchResultType.Terrible:
+                default:
+                    return badMismatchIndicatorPrefab;
+            }
+        }
+
+        private MismatchIndicatorViewCtrl InstantiateMismatchIndicator(GameObject prefab, MessageViewCtrl m1,
+            MessageViewCtrl m2)
         {
             var m1TopRight = ConvertFromMessageLocalPositionToListLocalPosition(
                 m1.GetContent(), m1.GetContent().rect.max, listRoot);
@@ -79,7 +103,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             var center = (m1TopRight + m2BottomLeft) * 0.5f;
             var size = m1TopRight - m2BottomLeft;
             size = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
-            var go = Instantiate(mismatchIndicatorPrefab, listRoot);
+            var go = Instantiate(prefab, listRoot);
             var viewCtrl = go.GetComponent<MismatchIndicatorViewCtrl>();
             viewCtrl.ResizeRectTransform(center, size);
             return viewCtrl;
@@ -98,22 +122,31 @@ namespace _DeepChat.Scripts.ViewCtrls
             var m1OriginalY = m1Transform.localPosition.y;
             var m2OriginalY = m2Transform.localPosition.y;
 
+            if (makeM1SemiTransparent)
+                m2.transform.SetSiblingIndex(m1.transform.GetSiblingIndex());
+
+            const float joinDuration = 1.0f;
+            if (makeM1SemiTransparent)
+                m1.GetCanvasGroup().DOFade(0.5f, joinDuration).Play();
             var targetY = (m1OriginalY + m2OriginalY) * 0.5f;
-            m1Transform.DOLocalMoveY(targetY, 1.0f).Play();
-            m2Transform.DOLocalMoveY(targetY, 1.0f).Play();
+            m1Transform.DOLocalMoveY(targetY, joinDuration).Play();
+            m2Transform.DOLocalMoveY(targetY, joinDuration).Play();
             indicator.GetCanvasGroup().alpha = 0.0f;
-            if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(0.5f, 1.0f).Play();
-            await Awaitable.WaitForSecondsAsync(1.0f, token);
+            await Awaitable.WaitForSecondsAsync(joinDuration, token);
 
-            indicator.GetCanvasGroup().DOFade(1.0f, 0.5f).Play();
-            await Awaitable.WaitForSecondsAsync(1.0f, token);
+            const float indicateDuration = 1.0f;
+            indicator.GetCanvasGroup().DOFade(1.0f, indicateDuration * 0.5f).Play();
+            await Awaitable.WaitForSecondsAsync(indicateDuration, token);
 
-            m1Transform.DOLocalMoveY(m1OriginalY, 1.0f).Play();
-            m2Transform.DOLocalMoveY(m2OriginalY, 1.0f).Play();
+            const float separateDuration = 1.0f;
             if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(1.0f, 1.0f).Play();
-            await Awaitable.WaitForSecondsAsync(1.0f, token);
+                m1.GetCanvasGroup().DOFade(1.0f, separateDuration).Play();
+            m1Transform.DOLocalMoveY(m1OriginalY, separateDuration).Play();
+            m2Transform.DOLocalMoveY(m2OriginalY, separateDuration).Play();
+            await Awaitable.WaitForSecondsAsync(separateDuration, token);
+
+            if (makeM1SemiTransparent)
+                m1.transform.SetSiblingIndex(m2.transform.GetSiblingIndex());
 
             m1.SetLayoutEnabled(true);
             m2.SetLayoutEnabled(true);
