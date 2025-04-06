@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using _DeepChat.Scripts.Common;
+using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
 {
-    public class ChatPageViewCtrl : MonoBehaviour
+    public class ChatPageViewCtrl : MonoBehaviour, IChatGameView
     {
+        [SerializeField] private GameRule gameRule;
+        [SerializeField] private bool runOnStart;
+
         [Header("UI Components")] [SerializeField]
         private MessageListViewCtrl messages;
 
@@ -18,63 +24,79 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private InputFieldViewCtrl inputField;
         [SerializeField] private CountdownViewCtrl countdown;
 
-        [Header("Logic Components")] [SerializeField]
-        private ChatGameCtrl game;
+        private AwaitableCompletionSource<List<Emoticon>> _waitingPlayerAction;
 
         private void Awake()
         {
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);
             emoticons.SelectionChanged += OnPlayerEmoticonSelectionChanged;
-
-            game.ScoreChanged += OnScoreChanged;
-            game.PlayerTurnBegin += OnPlayerTurnBegin;
-            game.PlayerEmoticonsChanged += OnPlayerEmoticonsChanged;
-            game.PlayerTurnEnd += OnPlayerTurnEnd;
-            game.NpcMessageSent += OnNpcMessageSent;
         }
 
-        private void OnScoreChanged(int newScore)
+        private async void Start()
         {
-            score.UpdateScore(newScore);
-        }
-
-        private void OnPlayerEmoticonsChanged(List<Emoticon> newEmoticons)
-        {
-            emoticons.SetEmoticons(newEmoticons);
-            inputField.SetAsHintingInput();
-        }
-
-        private void OnPlayerTurnBegin()
-        {
-            inputField.SetAsHintingInput();
+            if (!runOnStart)
+                return;
+            var game = new ChatGame();
+            await game.Run(destroyCancellationToken, gameRule, this);
         }
 
         private void OnPlayerSendButtonClicked()
         {
-            var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
-            var message = game.PlayerSendMessage(selectedEmoticons);
-            messages.Append(ActorType.Player, message);
+            if (_waitingPlayerAction == null)
+            {
+                Debug.Log("不许动");
+                return;
+            }
 
-            var diff = messages.GetDifferenceAgainstTarget();
-            Debug.Log($"Difference against target width: {diff:F2}");
-            var dist = Mathf.Abs(diff);
-            game.SettleTurn(dist);
-        }
+            var selectedEmoticons = emoticons.GetSelectedEmoticons().ToList();
 
-        private void OnPlayerTurnEnd()
-        {
             inputField.SetAsBlockingInput();
-        }
 
-        private void OnNpcMessageSent(string content)
-        {
-            messages.Append(ActorType.Npc, content);
+            var waitingPlayerAction = _waitingPlayerAction;
+            _waitingPlayerAction = null;
+            waitingPlayerAction.SetResult(selectedEmoticons);
         }
 
         private void OnPlayerEmoticonSelectionChanged()
         {
             var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
             inputField.SetContent(selectedEmoticons);
+        }
+
+        public async Awaitable AsyncNpcSendMessage(CancellationToken token, Message message)
+        {
+            messages.Append(ActorType.Npc, message.content);
+        }
+
+        public Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
+        {
+            inputField.SetAsHintingInput();
+            _waitingPlayerAction = new AwaitableCompletionSource<List<Emoticon>>();
+            return _waitingPlayerAction.Awaitable;
+        }
+
+        public async Awaitable AsyncPlayerSendMessage(CancellationToken token, string messageContent)
+        {
+            messages.Append(ActorType.Player, messageContent);
+        }
+
+        public async Awaitable AsyncPresentTurnResult(CancellationToken token, Rating rating, int newScore)
+        {
+            // var content =
+            //     $"width_match={rating.WidthMatchResult.ToString()}, score={rating.WidthMatchScore}, emotion={rating.NpcEmotion.ToString()}, emotion_match={rating.IsEmotionMatched}, bonus={rating.EmotionMatchScore}";
+            // messages.Append(ActorType.Npc, content);
+            score.UpdateScore(newScore);
+        }
+
+        public async Awaitable AsyncRefreshPlayerEmoticons(CancellationToken token, List<Emoticon> newEmoticons)
+        {
+            emoticons.SetEmoticons(newEmoticons);
+        }
+
+        public float GetMessageWidthDifference()
+        {
+            var diff = messages.GetDifferenceAgainstTarget();
+            return diff;
         }
     }
 }

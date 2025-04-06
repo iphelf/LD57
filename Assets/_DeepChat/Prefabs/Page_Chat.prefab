@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7243009596264646932}
-  - component: {fileID: 415246391300262863}
   - component: {fileID: 8921740506878314394}
   - component: {fileID: 6382726488741603383}
   - component: {fileID: 7322791517608258712}
@@ -46,20 +45,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &415246391300262863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189722226407092182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 457c839e67744e58a1a54183b7d511bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameRule: {fileID: 11400000, guid: 5f117f1f62006974fbe113041258854c, type: 2}
-  runOnStart: 0
 --- !u!114 &8921740506878314394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,13 +57,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cb8522c4f74744ac80ab9b670b3d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameRule: {fileID: 11400000, guid: 5f117f1f62006974fbe113041258854c, type: 2}
+  runOnStart: 0
   messages: {fileID: 3769262000791549505}
   emoticons: {fileID: 6494140293467741769}
   sendButton: {fileID: 6135604224982272135}
   score: {fileID: 6775394314825789333}
   inputField: {fileID: 7845700579601188764}
   countdown: {fileID: 8549074826198291247}
-  game: {fileID: 415246391300262863}
 --- !u!222 &6382726488741603383
 CanvasRenderer:
   m_ObjectHideFlags: 0
