@@ -2235,7 +2235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5372153370747845615, guid: 13a643b7e33168f49863dc30593fc313, type: 3}
       propertyPath: m_Size
-      value: 0.4600913
+      value: 0.4578896
       objectReference: {fileID: 0}
     - target: {fileID: 5384451461480733051, guid: 13a643b7e33168f49863dc30593fc313, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4280,6 +4280,11 @@ PrefabInstance:
     - target: {fileID: 6885466073929237102, guid: 79ec20f87d95d504d8615f975970cac0, type: 3}
       propertyPath: m_Name
       value: InputField
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177463118259031937, guid: 79ec20f87d95d504d8615f975970cac0, type: 3}
+      propertyPath: m_text
+      value: The quick brown fox jumps ove the lazy dog. The quick brown fox jumps
+        ove the lazy dog.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
