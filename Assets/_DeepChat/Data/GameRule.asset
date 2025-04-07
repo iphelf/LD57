@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0acce422faa4233939308ab18c72c8f, type: 3}
   m_Name: GameRule
   m_EditorClassIdentifier: 
-  perfectMatchBound: 18
-  goodMatchBound: 50
-  perfectMatchScore: 25
+  perfectMatchBound: 17
+  goodMatchBound: 40
+  perfectMatchScore: 20
   goodMatchScore: 10
-  badMatchScore: -5
+  badMatchScore: -10
   terribleMatchScore: -15
-  emotionBonusMatchScore: 5
+  emotionBonusMatchScore: 3
   initialScore: 50
   minScoreForHappyEnd: 100
   maxScoreForBadEnd: 0
@@ -32,4 +32,4 @@ MonoBehaviour:
   mediumBonusWeight: 1
   longBonusWeight: 3
   npcMessageBank: {fileID: 11400000, guid: 866df3683d2647a4794246714e308b44, type: 2}
-  npcMaxWaitDuration: 8.5
+  npcMaxWaitDuration: 9
