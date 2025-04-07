@@ -34,22 +34,25 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         private void Awake()
         {
-            closeButton.onClick.AddListener(() => Destroy(gameObject));
+            closeButton.onClick.AddListener(() =>
+            {
+                OnClose?.Invoke();
+                Destroy(gameObject);
+            });
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);
             emoticons.SelectionChanged += OnPlayerEmoticonSelectionChanged;
 
             endingDialog.OnRestartButtonClicked += () => StartCoroutine(LaunchGame());
-            endingDialog.OnExitButtonClicked += () => Destroy(gameObject);
+            endingDialog.OnExitButtonClicked += () =>
+            {
+                OnClose?.Invoke();
+                Destroy(gameObject);
+            };
         }
 
         private void Start()
         {
             StartCoroutine(LaunchGame());
-        }
-
-        private void OnDestroy()
-        {
-            OnClose?.Invoke();
         }
 
         private async Awaitable LaunchGame()
