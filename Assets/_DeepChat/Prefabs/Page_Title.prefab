@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 8750144750602601302}
   - component: {fileID: 4341499582884147964}
   - component: {fileID: 4729648149094567679}
+  - component: {fileID: 5124041551650608576}
   m_Layer: 5
   m_Name: CreditsButton
   m_TagString: Untagged
@@ -257,6 +258,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5124041551650608576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2493456686715333386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5db752a2f8a4464b68c8ba88df5670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7480034727285834270
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +511,7 @@ GameObject:
   - component: {fileID: 6308794650326583134}
   - component: {fileID: 2069523090222902362}
   - component: {fileID: 1891072987114694642}
+  - component: {fileID: 3985386615788702834}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -607,6 +621,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3985386615788702834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973196571447649316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5db752a2f8a4464b68c8ba88df5670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8320377362390266016
 GameObject:
   m_ObjectHideFlags: 0

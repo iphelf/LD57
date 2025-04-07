@@ -1,13 +1,16 @@
 ﻿using System;
+using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
+using _DeepChat.Scripts.Systems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
 {
-    public class EmoticonViewCtrl : MonoBehaviour
+    public class EmoticonViewCtrl : MonoBehaviour, IPointerEnterHandler
     {
         [SerializeField] private Toggle toggle;
         [SerializeField] private TMP_Text text;
@@ -44,6 +47,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             {
                 OnEmoticonShowUp.Invoke();
             }
+
             IsVisible = visible;
             canvasGroup.alpha = visible ? 1 : 0;
             canvasGroup.interactable = visible;
@@ -63,6 +67,12 @@ namespace _DeepChat.Scripts.ViewCtrls
         private void OnToggleValueChanged(bool isOn)
         {
             CheckStateChanged?.Invoke();
+            AudioManager.PlaySfx(SfxKey.DefaultButtonClick);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            AudioManager.PlaySfx(SfxKey.DefaultButtonHover);
         }
     }
 }
