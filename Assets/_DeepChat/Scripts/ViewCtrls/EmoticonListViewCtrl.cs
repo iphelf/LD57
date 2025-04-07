@@ -47,6 +47,14 @@ namespace _DeepChat.Scripts.ViewCtrls
             }
         }
 
+        public void ClearSelection()
+        {
+            foreach (var emoticonViewCtrl in _emoticons.Where(v => v.IsChecked()))
+            {
+                emoticonViewCtrl.SetUnchecked();
+            }
+        }
+
         public void FillEmoticons(IEnumerable<Emoticon> emoticons)
         {
             Clear();

@@ -85,6 +85,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             }
             else
             {
+                emoticons.ClearSelection();
                 OnTimeOut.Invoke();
             }
 
