@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
 using JetBrains.Annotations;
@@ -51,6 +52,11 @@ namespace _DeepChat.Scripts.Data
 
                 _emoticonsOfSize[emoticon.size].Add(emoticon);
             }
+        }
+
+        private void OnEnable()
+        {
+            OnValidate();
         }
 
         public Emoticon SampleBySize(SizeType size)

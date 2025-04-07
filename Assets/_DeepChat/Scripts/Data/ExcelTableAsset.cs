@@ -36,9 +36,14 @@ namespace _DeepChat.Scripts.Data
             foreach (var sheet in sheets)
             {
                 sheet.ColumnOfName = new Dictionary<string, int>();
-                for (int i = 0; i < sheet.columns.Count; ++i)
+                for (var i = 0; i < sheet.columns.Count; ++i)
                     sheet.ColumnOfName.Add(sheet.columns[i], i);
             }
+        }
+
+        private void OnEnable()
+        {
+            OnValidate();
         }
     }
 }

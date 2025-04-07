@@ -31,7 +31,7 @@ namespace _DeepChat.Scripts.Logic
             await _view.AsyncPresentNewScore(_score, _rule.minScoreForHappyEnd);
             await AsyncFillPlayerEmoticons(token);
 
-            while (!token.IsCancellationRequested)
+            while (true)
             {
                 var message = _npcMessageSampler.Sample();
                 await _view.AsyncNpcSendMessage(token, message);
@@ -77,10 +77,6 @@ namespace _DeepChat.Scripts.Logic
                 if (_playerEmoticons.Count + _remainingEmoticons <= 0)
                     return false;
             }
-
-            token.ThrowIfCancellationRequested();
-            // not reachable
-            return false;
         }
 
         private async Awaitable AsyncFillPlayerEmoticons(CancellationToken token)
