@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5db752a2f8a4464b68c8ba88df5670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableHoverSound: 0
 --- !u!1 &1860959507060566931
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5db752a2f8a4464b68c8ba88df5670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableHoverSound: 0
 --- !u!1 &6096630267527356361
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +430,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0d2812aebbf7f9b468093bf01b1995b0, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

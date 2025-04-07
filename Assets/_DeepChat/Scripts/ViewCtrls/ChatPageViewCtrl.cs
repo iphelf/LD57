@@ -15,10 +15,8 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private GameRule gameRule;
 
         [Header("UI Components")] [SerializeField]
-        private Button closeButton;
+        private MessageListViewCtrl messages;
 
-        [SerializeField] private Button helpButton;
-        [SerializeField] private MessageListViewCtrl messages;
         [SerializeField] private EmoticonListViewCtrl emoticons;
         [SerializeField] private Button sendButton;
         [SerializeField] private ScoreViewCtrl score;
@@ -29,17 +27,20 @@ namespace _DeepChat.Scripts.ViewCtrls
         [Header("UI Dialogs")] [SerializeField]
         private EndingDialogViewCtrl endingDialog;
 
+        [SerializeField] private MenuDialogViewCtrl menuDialog;
+
         private AwaitableCompletionSource<List<int>> _waitingPlayerAction;
 
         public event Action OnClose;
 
         private void Awake()
         {
-            closeButton.onClick.AddListener(() =>
+            menuDialog.OnExitButtonClicked += () =>
             {
                 OnClose?.Invoke();
                 Destroy(gameObject);
-            });
+            };
+            menuDialog.OnHelpButtonClicked += () => { Debug.Log("Help"); };
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);
             emoticons.SelectionChanged += OnPlayerEmoticonSelectionChanged;
 
@@ -70,6 +71,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         }
 
         public UnityEvent OnTimeOut;
+
         private void FinishPlayerAction(bool success)
         {
             countdown.StopCountdown();
@@ -84,6 +86,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             {
                 OnTimeOut.Invoke();
             }
+
             var waitingPlayerAction = _waitingPlayerAction;
             _waitingPlayerAction = null;
             waitingPlayerAction.SetResult(result);
