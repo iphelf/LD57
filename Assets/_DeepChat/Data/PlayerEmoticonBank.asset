@@ -39,12 +39,12 @@ MonoBehaviour:
   - content: "\u2602\uA4B0\xB4\u2022\u0BF0\u2022`\u0E51\uA4B1\u2026"
     emotion: 2
     size: 2
-  - content: "( \u0E51\u275B\u1D17\u275B\u0E51 ) ( \u275B\u0E31\u1D17\u275B\u0E31\u204E
+  - content: "( \u0E51\u275B\u1D17\u275B\u0E51 ) ( \u275B\u0E31\u1D17\u275B\u0E31
       )"
     emotion: 1
     size: 3
-  - content: "(\u0E51\u01A1 \u2083 \u01A1)\u2665 \u2661(\u02C3\u0348 \u0AA6 \u02C2\u0348
-      \u0F36 )"
+  - content: "(\u0E51\u01A1 \u2083 \u01A1)\u2665 \u2661(\u02C3\u0348 \u0AA6 \u02C2\u0348 
+      )"
     emotion: 1
     size: 3
   - content: "o(*\u2267\u25BD\u2266)\u30C4"

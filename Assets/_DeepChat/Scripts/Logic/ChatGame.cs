@@ -40,8 +40,8 @@ namespace _DeepChat.Scripts.Logic
                 var message = _npcMessageSampler.Sample();
                 await _view.AsyncNpcSendMessage(token, message);
 
-                // var waitDuration = _rule.npcMaxWaitDuration - (1.0f * _score / _rule.minScoreForHappyEnd - 0.5f) * 42;
-                var waitDuration = _rule.npcMaxWaitDuration;
+                var waitDuration = _rule.npcMaxWaitDuration - (1.0f * _score / _rule.minScoreForHappyEnd - 0.5f) * 1.3f;
+                // var waitDuration = _rule.npcMaxWaitDuration;
                 var selectedEmoticonIndices = await _view.AsyncWaitForPlayerAction(token, waitDuration);
                 var selectedEmotion = selectedEmoticonIndices == null
                     ? EmotionType.None

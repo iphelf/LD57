@@ -2,6 +2,7 @@
 using _DeepChat.Scripts.Logic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
@@ -14,6 +15,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private Sprite busySprite;
         [SerializeField] private string busyStr;
 
+        public UnityEvent OnEmoticonShowUp;
         public Emoticon Content { get; private set; }
         public event Action CheckStateChanged;
         public bool IsVisible { get; private set; } = true;
@@ -38,6 +40,10 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public void SetVisible(bool visible)
         {
+            if (visible == true && IsVisible == false)
+            {
+                OnEmoticonShowUp.Invoke();
+            }
             IsVisible = visible;
             canvasGroup.alpha = visible ? 1 : 0;
             canvasGroup.interactable = visible;
