@@ -28,6 +28,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         private EndingDialogViewCtrl endingDialog;
 
         [SerializeField] private MenuDialogViewCtrl menuDialog;
+        [SerializeField] private TutorialDialogViewCtrl tutorialDialog;
 
         private AwaitableCompletionSource<List<int>> _waitingPlayerAction;
 
@@ -40,7 +41,7 @@ namespace _DeepChat.Scripts.ViewCtrls
                 OnClose?.Invoke();
                 Destroy(gameObject);
             };
-            menuDialog.OnHelpButtonClicked += () => { Debug.Log("Help"); };
+            menuDialog.OnHelpButtonClicked += () => tutorialDialog.gameObject.SetActive(true);
             sendButton.onClick.AddListener(OnPlayerSendButtonClicked);
             emoticons.SelectionChanged += OnPlayerEmoticonSelectionChanged;
 
