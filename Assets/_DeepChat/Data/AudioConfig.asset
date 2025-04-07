@@ -17,28 +17,28 @@ MonoBehaviour:
     music: {fileID: 8300000, guid: ea09aa8d9d73bcc41a67ccabae63181a, type: 3}
   sfxList:
   - key: 1
-    sfx: {fileID: 8300000, guid: 15f66381c0b5f4088897f5064828cf83, type: 3}
+    sfx: {fileID: 8300000, guid: 264b7cf768b37164f8fdf542e8f61172, type: 3}
   - key: 2
-    sfx: {fileID: 8300000, guid: 9bd3d19b277e4c84fbcbe026e15b6c3a, type: 3}
+    sfx: {fileID: 8300000, guid: d8c4d264e228af542bd131e77e5f1531, type: 3}
   - key: 3
-    sfx: {fileID: 8300000, guid: 60df383cfaa724fa489718e20a9d8121, type: 3}
+    sfx: {fileID: 8300000, guid: 5cd3e57293a04de44900204d4efa836f, type: 3}
   - key: 4
-    sfx: {fileID: 8300000, guid: 23e8e4abca648c240bcbc6791ab25647, type: 3}
+    sfx: {fileID: 8300000, guid: 700dc07dbc5e05a4db6b583d06b2500a, type: 3}
   - key: 5
-    sfx: {fileID: 8300000, guid: 6527cfed632194066a9023d0ea626404, type: 3}
+    sfx: {fileID: 8300000, guid: c287dafb330bd6849a4836014bd1b1f0, type: 3}
   - key: 6
-    sfx: {fileID: 8300000, guid: 10a99a3d1c55e413ba62cdf274ff9613, type: 3}
+    sfx: {fileID: 8300000, guid: b3a358da4b5130c47b6a380e404a4c90, type: 3}
   - key: 7
-    sfx: {fileID: 8300000, guid: d4904e5db16d949c9a9d1ef08276ef05, type: 3}
+    sfx: {fileID: 8300000, guid: 914743f6558cc004f96b31f0416f7ef9, type: 3}
   - key: 8
-    sfx: {fileID: 8300000, guid: d4904e5db16d949c9a9d1ef08276ef05, type: 3}
+    sfx: {fileID: 8300000, guid: 914743f6558cc004f96b31f0416f7ef9, type: 3}
   - key: 9
-    sfx: {fileID: 8300000, guid: 02766202657fe174ebea828e88be6b82, type: 3}
+    sfx: {fileID: 8300000, guid: c3718180f1375d040b08e3656360fbdd, type: 3}
   - key: 10
-    sfx: {fileID: 8300000, guid: f26c3376050d38c4ca8c1f2e1c68d340, type: 3}
+    sfx: {fileID: 8300000, guid: b63f3eb7a9950414587ca1a4ea3a3076, type: 3}
   - key: 11
-    sfx: {fileID: 8300000, guid: 1e783bcc20aedbe49a938657498beb15, type: 3}
+    sfx: {fileID: 8300000, guid: 070fe51327490e2428cc0775a4b622b8, type: 3}
   - key: 12
-    sfx: {fileID: 8300000, guid: 41b2288eff7404345981ea9977cbe187, type: 3}
+    sfx: {fileID: 8300000, guid: 3bfb087831bdaa946bbc6cf00bf50f8b, type: 3}
   - key: 13
-    sfx: {fileID: 8300000, guid: 1edb50ae4e464424fb55d90f69a8ce58, type: 3}
+    sfx: {fileID: 8300000, guid: 3a565d9920b8124429c6e36c3be0d410, type: 3}
