@@ -13,7 +13,6 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private Image widthMatchResultImage;
         [SerializeField] private TMP_Text widthMatchScoreText;
         [SerializeField] private Image emotionImage;
-        [SerializeField] private Image emotionMatchStateImage;
         [SerializeField] private TMP_Text emotionMatchScoreText;
 
         [SerializeField] private RatingMessageViewConfig config;
@@ -28,10 +27,9 @@ namespace _DeepChat.Scripts.ViewCtrls
                 ? $"+{rating.WidthMatchScore}"
                 : rating.WidthMatchScore.ToString();
             widthMatchScoreText.color = widthMatchResult.color;
-            var emotion = config.emotionViewConfigs.First(e => e.type == rating.NpcEmotion);
+            var emotion = config.emotionViewConfigs.First(e
+                => e.type == rating.NpcEmotion && e.isMatched == rating.IsEmotionMatched);
             emotionImage.sprite = emotion.sprite;
-            emotionMatchStateImage.sprite =
-                rating.IsEmotionMatched ? config.emotionMatchedSprite : config.emotionNotMatchedSprite;
             emotionMatchScoreText.text = rating.EmotionMatchScore >= 0
                 ? $"+{rating.EmotionMatchScore}"
                 : rating.EmotionMatchScore.ToString();

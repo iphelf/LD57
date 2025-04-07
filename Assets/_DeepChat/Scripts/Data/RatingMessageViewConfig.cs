@@ -23,12 +23,10 @@ namespace _DeepChat.Scripts.Data
         public class EmotionViewConfig
         {
             public EmotionType type;
+            public bool isMatched;
             public Sprite sprite;
         }
 
         public List<EmotionViewConfig> emotionViewConfigs = new();
-
-        public Sprite emotionMatchedSprite;
-        public Sprite emotionNotMatchedSprite;
     }
 }

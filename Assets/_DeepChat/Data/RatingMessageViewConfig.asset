@@ -31,8 +31,14 @@ MonoBehaviour:
     color: {r: 0.49411768, g: 0.18823531, b: 0.2901961, a: 1}
   emotionViewConfigs:
   - type: 1
-    sprite: {fileID: 21300000, guid: 3f31781b112040048bd7ee8a76471ae2, type: 3}
+    isMatched: 1
+    sprite: {fileID: 21300000, guid: 7d1674830d1401943a0745891ebedb73, type: 3}
+  - type: 1
+    isMatched: 0
+    sprite: {fileID: 21300000, guid: eb981c95880f5cd44893847295373353, type: 3}
   - type: 2
-    sprite: {fileID: 21300000, guid: 2c8e325373adcd2418a00d9059e870b6, type: 3}
-  emotionMatchedSprite: {fileID: 21300000, guid: 4f8b3508fe3a4bd41b10f731da8b7c91, type: 3}
-  emotionNotMatchedSprite: {fileID: 21300000, guid: 955b0a94faef03c4c80a7d4d60f430b9, type: 3}
+    isMatched: 1
+    sprite: {fileID: 21300000, guid: 5d909a8f46a793d40bbb6bddc8435179, type: 3}
+  - type: 2
+    isMatched: 0
+    sprite: {fileID: 21300000, guid: adc76ccbd5bc91544872256129eabc79, type: 3}

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 94e430f63eff46e4489cf01dedd16b04
+guid: 5d909a8f46a793d40bbb6bddc8435179
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6142405677758296505
-    second: "\u9F20\u6807_0"
+      213: -2146151960559615753
+    second: "\u60B2\u4F24-\u5BF9_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,19 +97,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -123,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -139,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u9F20\u6807_0"
+      name: "\u60B2\u4F24-\u5BF9_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 60
-        height: 90
+        width: 41
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9b130298b653e3550800000000000000
-      internalID: 6142405677758296505
+      spriteID: 7f006d4a9265732e0800000000000000
+      internalID: -2146151960559615753
       vertices: []
       indices: 
       edges: []
@@ -170,7 +157,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\u9F20\u6807_0": 6142405677758296505
+      "\u60B2\u4F24-\u5BF9_0": -2146151960559615753
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
