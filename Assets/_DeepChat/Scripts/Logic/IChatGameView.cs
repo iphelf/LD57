@@ -9,7 +9,7 @@ namespace _DeepChat.Scripts.Logic
     {
         public void Reset();
         public Awaitable AsyncNpcSendMessage(CancellationToken token, Message message);
-        public Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds);
+        public Awaitable<List<int>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds);
         public Awaitable AsyncPlayerSendMessage(CancellationToken token, [CanBeNull] string messageContent);
         public Awaitable AsyncPresentTurnResult(CancellationToken token, TurnActionResult actionResult, Rating rating);
         public Awaitable AsyncPresentNewScore(int newScore, int maxScore);

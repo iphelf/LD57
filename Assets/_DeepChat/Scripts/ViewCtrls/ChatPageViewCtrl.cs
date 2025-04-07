@@ -28,7 +28,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [Header("UI Dialogs")] [SerializeField]
         private EndingDialogViewCtrl endingDialog;
 
-        private AwaitableCompletionSource<List<Emoticon>> _waitingPlayerAction;
+        private AwaitableCompletionSource<List<int>> _waitingPlayerAction;
 
         public event Action OnClose;
 
@@ -73,7 +73,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             countdown.StopCountdown();
             inputField.SetAsBlockingInput();
 
-            var result = success ? emoticons.GetSelectedEmoticons().ToList() : null;
+            var result = success ? emoticons.GetSelectedIndices().ToList() : null;
             if (success)
             {
                 emoticons.RemoveSelectedEmoticons();
@@ -112,7 +112,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             await messages.AsyncAppendNpcMessage(token, message.content);
         }
 
-        public async Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
+        public async Awaitable<List<int>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
         {
             if (emoticons.HasAnySelectedEmoticons())
             {
@@ -125,7 +125,7 @@ namespace _DeepChat.Scripts.ViewCtrls
                 sendButton.interactable = false;
             }
 
-            _waitingPlayerAction = new AwaitableCompletionSource<List<Emoticon>>();
+            _waitingPlayerAction = new AwaitableCompletionSource<List<int>>();
             countdown.StartCountdown(maxWaitSeconds, () => FinishPlayerAction(false));
             await messages.AsyncScrollToBottom(token);
             var selectedEmoticons = _waitingPlayerAction == null ? null : await _waitingPlayerAction.Awaitable;

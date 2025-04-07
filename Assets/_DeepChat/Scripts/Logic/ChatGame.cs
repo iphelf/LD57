@@ -42,28 +42,29 @@ namespace _DeepChat.Scripts.Logic
 
                 // var waitDuration = _rule.npcMaxWaitDuration - (1.0f * _score / _rule.minScoreForHappyEnd - 0.5f) * 42;
                 var waitDuration = _rule.npcMaxWaitDuration;
-                var selectedEmoticons = await _view.AsyncWaitForPlayerAction(token, waitDuration);
-                if (selectedEmoticons == null)
+                var selectedEmoticonIndices = await _view.AsyncWaitForPlayerAction(token, waitDuration);
+                var selectedEmotion = selectedEmoticonIndices == null
+                    ? EmotionType.None
+                    : GetEmotion(selectedEmoticonIndices.Select(i => _playerEmoticons[i].emotion));
+                if (selectedEmoticonIndices == null)
                 {
                     await _view.AsyncPlayerSendMessage(token, null);
                 }
                 else
                 {
-                    for (var i = _playerEmoticons.Count - 1; i >= 0; --i)
-                        if (selectedEmoticons.Contains(_playerEmoticons[i]))
-                            _playerEmoticons.RemoveAt(i);
-                    var messageContent = string.Concat(selectedEmoticons.Select(e => e.content));
+                    var messageContent = string.Concat(
+                        selectedEmoticonIndices.Select(i => _playerEmoticons[i].content));
+                    foreach (var i in selectedEmoticonIndices)
+                        _playerEmoticons[i] = null;
                     await _view.AsyncPlayerSendMessage(token, messageContent);
                 }
 
                 var turnActionResult = new TurnActionResult
                 {
-                    IsTimeout = selectedEmoticons == null,
-                    MatchWidthDiff = selectedEmoticons == null ? 0.0f : _view.GetMessageWidthDifference(),
+                    IsTimeout = selectedEmoticonIndices == null,
+                    MatchWidthDiff = selectedEmoticonIndices == null ? 0.0f : _view.GetMessageWidthDifference(),
                     NpcEmotion = message.emotion,
-                    PlayerEmotion = selectedEmoticons == null
-                        ? EmotionType.None
-                        : GetEmotion(selectedEmoticons.Select(e => e.emotion)),
+                    PlayerEmotion = selectedEmotion,
                 };
                 if (!turnActionResult.IsTimeout)
                     Debug.Log($"Difference against target width: {turnActionResult.MatchWidthDiff:F2}");
@@ -80,7 +81,7 @@ namespace _DeepChat.Scripts.Logic
 
                 await AsyncRefillPlayerEmoticons(token);
 
-                if (_playerEmoticons.Count + _remainingEmoticons <= 0)
+                if (_playerEmoticons.Count(e => e != null) + _remainingEmoticons <= 0)
                     return false;
             }
         }
@@ -90,7 +91,7 @@ namespace _DeepChat.Scripts.Logic
             for (var i = 0; i < _rule.maxEmoticonCountInHand; ++i)
             {
                 var emoticon = _rule.SampleEmoticon(
-                    sizeType => _playerEmoticons.Any(e => e.size == sizeType));
+                    sizeType => _playerEmoticons.Any(e => e?.size == sizeType));
                 _playerEmoticons.Add(emoticon);
             }
 
@@ -100,14 +101,15 @@ namespace _DeepChat.Scripts.Logic
         private async Awaitable AsyncRefillPlayerEmoticons(CancellationToken token)
         {
             List<Emoticon> refilledEmoticons = new();
-            while (_remainingEmoticons > 0 &&
-                   _playerEmoticons.Count < _rule.maxEmoticonCountInHand)
+            for (var i = 0; _remainingEmoticons > 0 && i < _playerEmoticons.Count; ++i)
             {
-                --_remainingEmoticons;
+                if (_playerEmoticons[i] != null)
+                    continue;
                 var emoticon = _rule.SampleEmoticon(
-                    sizeType => _playerEmoticons.Any(e => e.size == sizeType));
+                    sizeType => _playerEmoticons.Any(e => e?.size == sizeType));
+                --_remainingEmoticons;
                 refilledEmoticons.Add(emoticon);
-                _playerEmoticons.Add(emoticon);
+                _playerEmoticons[i] = emoticon;
             }
 
             await _view.AsyncAppendPlayerEmoticons(token, refilledEmoticons, _remainingEmoticons);

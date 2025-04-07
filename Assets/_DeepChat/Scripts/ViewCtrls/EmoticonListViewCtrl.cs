@@ -23,9 +23,14 @@ namespace _DeepChat.Scripts.ViewCtrls
                 Clear();
         }
 
+        public IEnumerable<int> GetSelectedIndices()
+        {
+            return Enumerable.Range(0, _emoticons.Count).Where(i => _emoticons[i].IsChecked());
+        }
+
         public IEnumerable<Emoticon> GetSelectedEmoticons()
         {
-            return _emoticons.Where(v => v.IsChecked()).Select(v => v.Content);
+            return _emoticons.Where(e => e.IsChecked()).Select(e => e.Content);
         }
 
         public bool HasAnySelectedEmoticons()
@@ -63,6 +68,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             {
                 while (index < _emoticons.Count && _emoticons[index].IsVisible)
                     ++index;
+                Debug.Assert(index < _emoticons.Count);
                 _emoticons[index].SetContent(emoticon);
                 _emoticons[index].SetVisible(true);
             }
