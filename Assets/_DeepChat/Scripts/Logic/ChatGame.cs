@@ -32,7 +32,7 @@ namespace _DeepChat.Scripts.Logic
         {
             _view.Reset();
 
-            await _view.AsyncPresentNewScore(_score, _rule.minScoreForHappyEnd);
+            await _view.AsyncPresentNewScore(_score, _rule.minScoreForHappyEnd, true);
             await AsyncFillPlayerEmoticons(token);
 
             while (true)

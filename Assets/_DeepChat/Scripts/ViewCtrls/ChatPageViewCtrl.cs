@@ -149,9 +149,9 @@ namespace _DeepChat.Scripts.ViewCtrls
             await messages.AsyncAppendRating(token, rating);
         }
 
-        public async Awaitable AsyncPresentNewScore(int newScore, int maxScore)
+        public async Awaitable AsyncPresentNewScore(int newScore, int maxScore, bool skipAnim = false)
         {
-            score.UpdateScore(newScore, maxScore);
+            score.UpdateScore(newScore, maxScore, skipAnim);
         }
 
         public async Awaitable AsyncFillPlayerEmoticons(

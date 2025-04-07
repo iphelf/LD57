@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using _DeepChat.Scripts.Common;
+using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
+using _DeepChat.Scripts.Systems;
 using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
@@ -47,22 +49,25 @@ namespace _DeepChat.Scripts.ViewCtrls
             var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
             messages.Add(messageViewCtrl);
+            AudioManager.PlaySfx(SfxKey.SendMessage);
             await AsyncScrollToBottom(token);
         }
 
         public async Awaitable AsyncAppendPlayerBusyMessage(CancellationToken token)
         {
             Instantiate(playerBusyMessagePrefab, listRoot);
-            await Awaitable.EndOfFrameAsync(token);
+            AudioManager.PlaySfx(SfxKey.SendMessage);
             await AsyncScrollToBottom(token);
         }
 
         public async Awaitable AsyncAppendNpcMessage(CancellationToken token, string message)
         {
+            await Awaitable.WaitForSecondsAsync(1.0f, token);
             var go = Instantiate(npcMessagePrefab, listRoot);
             var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
             messages.Add(messageViewCtrl);
+            AudioManager.PlaySfx(SfxKey.ReceiveMessage);
             await AsyncScrollToBottom(token);
         }
 
@@ -73,12 +78,13 @@ namespace _DeepChat.Scripts.ViewCtrls
             var m2 = messages[^1];
             var indicatorPrefab = GetMismatchIndicatorPrefab(widthMatchResult);
             var indicator = InstantiateMismatchIndicator(indicatorPrefab, m1, m2);
+            var sfxKey = GetMismatchIndicateSfxKey(widthMatchResult);
 
             var m1Clone = Instantiate(m1.gameObject, listRoot, true).GetComponent<TextMessageViewCtrl>();
             var m2Clone = Instantiate(m2.gameObject, listRoot, true).GetComponent<TextMessageViewCtrl>();
             m1Clone.GetCanvasGroup().alpha = 0.0f;
             m2Clone.GetCanvasGroup().alpha = 0.0f;
-            await AsyncPlayMatchAnimation(token, m1, m2, indicator, enableTransparency);
+            await AsyncPlayMatchPerformance(token, m1, m2, indicator, enableTransparency, sfxKey);
             Destroy(m1Clone.gameObject);
             Destroy(m2Clone.gameObject);
         }
@@ -98,6 +104,22 @@ namespace _DeepChat.Scripts.ViewCtrls
             }
         }
 
+        private SfxKey GetMismatchIndicateSfxKey(WidthMatchResultType widthMatchResult)
+        {
+            switch (widthMatchResult)
+            {
+                case WidthMatchResultType.Perfect:
+                    return SfxKey.MatchPerfect;
+                case WidthMatchResultType.Good:
+                    return SfxKey.MatchGood;
+                case WidthMatchResultType.Bad:
+                    return SfxKey.MatchBad;
+                case WidthMatchResultType.Terrible:
+                default:
+                    return SfxKey.MatchTerrible;
+            }
+        }
+
         private MismatchIndicatorViewCtrl InstantiateMismatchIndicator(GameObject prefab, TextMessageViewCtrl m1,
             TextMessageViewCtrl m2)
         {
@@ -114,10 +136,10 @@ namespace _DeepChat.Scripts.ViewCtrls
             return viewCtrl;
         }
 
-        private async Awaitable AsyncPlayMatchAnimation(
+        private async Awaitable AsyncPlayMatchPerformance(
             CancellationToken token,
             TextMessageViewCtrl m1, TextMessageViewCtrl m2, MismatchIndicatorViewCtrl indicator,
-            bool makeM1SemiTransparent)
+            bool makeM1SemiTransparent, SfxKey sfxKey)
         {
             m2.SetLayoutEnabled(false);
             m1.SetLayoutEnabled(false);
@@ -143,6 +165,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             const float indicateDuration = 1.0f;
             indicator.GetCanvasGroup().DOFade(1.0f, indicateDuration * 0.5f).SetId(goID).Play();
+            AudioManager.PlaySfx(sfxKey);
             await Awaitable.WaitForSecondsAsync(indicateDuration, token);
 
             const float separateDuration = 1.0f;

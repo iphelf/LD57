@@ -1,6 +1,7 @@
 ﻿using System;
+using _DeepChat.Scripts.Data;
+using _DeepChat.Scripts.Systems;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
@@ -9,10 +10,7 @@ namespace _DeepChat.Scripts.ViewCtrls
     {
         [SerializeField] private GameObject happyEnd;
         [SerializeField] private GameObject badEnd;
-
-        [FormerlySerializedAs("againButton")] [SerializeField]
-        private Button restartButton;
-
+        [SerializeField] private Button restartButton;
         [SerializeField] private Button exitButton;
 
         public event Action OnRestartButtonClicked;
@@ -35,6 +33,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             happyEnd.SetActive(isHappy);
             badEnd.SetActive(!isHappy);
             gameObject.SetActive(true);
+            AudioManager.PlaySfx(isHappy ? SfxKey.EndHappy : SfxKey.EndBad);
         }
 
         private void OnRestartButtonClick()
