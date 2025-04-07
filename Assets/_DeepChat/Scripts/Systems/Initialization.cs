@@ -5,12 +5,13 @@ namespace _DeepChat.Scripts.Systems
 {
     public class Initialization : MonoBehaviour
     {
-        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioSource sfxAudioSource;
+        [SerializeField] private AudioSource bgmAudioSource;
         [SerializeField] private AudioConfig audioConfig;
 
         private void Awake()
         {
-            AudioManager.Initialize(audioConfig, audioSource);
+            AudioManager.Initialize(audioConfig, sfxAudioSource, bgmAudioSource);
         }
 
         private void Start()

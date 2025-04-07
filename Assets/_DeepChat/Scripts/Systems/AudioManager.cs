@@ -8,10 +8,11 @@ namespace _DeepChat.Scripts.Systems
     {
         private static readonly Dictionary<SfxKey, AudioClip> SfxDict = new();
         private static readonly Dictionary<MusicKey, AudioClip> MusicDict = new();
-        private static AudioSource _source;
+        private static AudioSource _sfxSource;
+        private static AudioSource _bgmSource;
         private static MusicKey _currentMusic;
 
-        public static void Initialize(AudioConfig config, AudioSource source)
+        public static void Initialize(AudioConfig config, AudioSource sfxSource, AudioSource bgmSource)
         {
             SfxDict.Clear();
             MusicDict.Clear();
@@ -19,8 +20,11 @@ namespace _DeepChat.Scripts.Systems
                 SfxDict.Add(entry.key, entry.sfx);
             foreach (var entry in config.musicList)
                 MusicDict.Add(entry.key, entry.music);
-            _source = source;
+            _sfxSource = sfxSource;
+            _bgmSource = bgmSource;
             _currentMusic = MusicKey.None;
+            _sfxSource.volume = config.sfxVolume;
+            _bgmSource.volume = config.musicVolume;
         }
 
         public static void PlaySfx(SfxKey key)
@@ -31,7 +35,7 @@ namespace _DeepChat.Scripts.Systems
                 return;
             }
 
-            _source.PlayOneShot(sfx);
+            _sfxSource.PlayOneShot(sfx);
         }
 
         public static void PlayMusic(MusicKey key)
@@ -42,11 +46,12 @@ namespace _DeepChat.Scripts.Systems
                 return;
             }
 
-            if (key == _currentMusic) return;
+            if (key == _currentMusic)
+                return;
             _currentMusic = key;
-            _source.clip = music;
-            _source.loop = true;
-            _source.Play();
+            _bgmSource.clip = music;
+            _bgmSource.loop = true;
+            _bgmSource.Play();
         }
     }
 }

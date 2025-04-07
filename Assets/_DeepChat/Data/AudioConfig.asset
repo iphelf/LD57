@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f75b2412cfc42f8979224a0180722a0, type: 3}
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
+  musicVolume: 0.23
+  sfxVolume: 1
   musicList:
   - key: 1
-    music: {fileID: 8300000, guid: ea09aa8d9d73bcc41a67ccabae63181a, type: 3}
+    music: {fileID: 8300000, guid: fd5d58d34a590dc4ab62d1a4497be699, type: 3}
   sfxList:
   - key: 1
     sfx: {fileID: 8300000, guid: 264b7cf768b37164f8fdf542e8f61172, type: 3}

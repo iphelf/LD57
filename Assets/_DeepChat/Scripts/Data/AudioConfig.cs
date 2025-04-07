@@ -31,6 +31,8 @@ namespace _DeepChat.Scripts.Data
     [CreateAssetMenu(menuName = "SO/AudioConfig", fileName = "AudioConfig")]
     public class AudioConfig : ScriptableObject
     {
+        [Range(0.0f, 1.0f)] public float musicVolume = 1.0f;
+        [Range(0.0f, 1.0f)] public float sfxVolume = 1.0f;
         public List<MusicEntry> musicList;
         public List<SfxEntry> sfxList;
 
