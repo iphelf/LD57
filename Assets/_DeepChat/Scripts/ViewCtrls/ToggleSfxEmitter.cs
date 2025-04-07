@@ -6,30 +6,27 @@ using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
 {
-    [RequireComponent(typeof(Button))]
-    public class ButtonSfxEmitter : MonoBehaviour, IPointerEnterHandler
+    [RequireComponent(typeof(Toggle))]
+    public class ToggleSfxEmitter : MonoBehaviour, IPointerEnterHandler
     {
-        [SerializeField] private bool disableHoverSound;
-        private Button _button;
+        private Toggle _toggle;
 
         private void Awake()
         {
-            _button = GetComponent<Button>();
-            _button.onClick.AddListener(OnButtonClicked);
+            _toggle = GetComponent<Toggle>();
+            _toggle.onValueChanged.AddListener(OnToggleValueChanged);
         }
 
-        private static void OnButtonClicked()
+        private static void OnToggleValueChanged(bool value)
         {
             AudioManager.PlaySfx(SfxKey.DefaultButtonClick);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (disableHoverSound)
+            if (!_toggle)
                 return;
-            if (!_button)
-                return;
-            if (!_button.interactable)
+            if (!_toggle.interactable)
                 return;
             AudioManager.PlaySfx(SfxKey.DefaultButtonHover);
         }

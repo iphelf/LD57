@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
 {
-    public class EmoticonViewCtrl : MonoBehaviour, IPointerEnterHandler
+    public class EmoticonViewCtrl : MonoBehaviour
     {
         [SerializeField] private Toggle toggle;
         [SerializeField] private TMP_Text text;
@@ -67,12 +67,6 @@ namespace _DeepChat.Scripts.ViewCtrls
         private void OnToggleValueChanged(bool isOn)
         {
             CheckStateChanged?.Invoke();
-            AudioManager.PlaySfx(SfxKey.DefaultButtonClick);
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            AudioManager.PlaySfx(SfxKey.DefaultButtonHover);
         }
     }
 }

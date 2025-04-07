@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8202006402070018923}
   - component: {fileID: 1596607714145449981}
   - component: {fileID: 6159500149589696167}
+  - component: {fileID: 8633129355982140309}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -120,6 +121,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8633129355982140309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179751886530003518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5db752a2f8a4464b68c8ba88df5670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableHoverSound: 1
 --- !u!1 &3229107499226024418
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,6 +561,7 @@ GameObject:
   - component: {fileID: 2664926424108423702}
   - component: {fileID: 4229964617783564289}
   - component: {fileID: 2999364707742930412}
+  - component: {fileID: 5035112592668038248}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -674,6 +689,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &5035112592668038248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7239859565477990692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbad51a3a60a46e68ff2b17d40b7f033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8450724822786719521
 GameObject:
   m_ObjectHideFlags: 0
