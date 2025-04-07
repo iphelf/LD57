@@ -5,6 +5,7 @@ using System.Threading;
 using _DeepChat.Scripts.Data;
 using _DeepChat.Scripts.Logic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace _DeepChat.Scripts.ViewCtrls
@@ -68,6 +69,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             }
         }
 
+        public UnityEvent OnTimeOut;
         private void FinishPlayerAction(bool success)
         {
             countdown.StopCountdown();
@@ -78,7 +80,10 @@ namespace _DeepChat.Scripts.ViewCtrls
             {
                 emoticons.RemoveSelectedEmoticons();
             }
-
+            else
+            {
+                OnTimeOut.Invoke();
+            }
             var waitingPlayerAction = _waitingPlayerAction;
             _waitingPlayerAction = null;
             waitingPlayerAction.SetResult(result);
