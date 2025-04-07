@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Data;
+using MoreMountains.Tools;
 using UnityEngine;
 
 namespace _DeepChat.Scripts.Logic
@@ -88,13 +89,16 @@ namespace _DeepChat.Scripts.Logic
 
         private async Awaitable AsyncFillPlayerEmoticons(CancellationToken token)
         {
-            for (var i = 0; i < _rule.maxEmoticonCountInHand; ++i)
-            {
-                var emoticon = _rule.SampleEmoticon(
-                    sizeType => _playerEmoticons.Any(e => e?.size == sizeType));
-                _playerEmoticons.Add(emoticon);
-            }
-
+            Debug.Assert(
+                _rule.initialShortEmoticonCount + _rule.initialMediumEmoticonCount + _rule.initialLongEmoticonCount
+                == _rule.maxEmoticonCountInHand);
+            for (var i = 0; i < _rule.initialShortEmoticonCount; ++i)
+                _playerEmoticons.Add(_rule.playerEmoticonBank.SampleBySize(SizeType.Short));
+            for (var i = 0; i < _rule.initialMediumEmoticonCount; ++i)
+                _playerEmoticons.Add(_rule.playerEmoticonBank.SampleBySize(SizeType.Medium));
+            for (var i = 0; i < _rule.initialLongEmoticonCount; ++i)
+                _playerEmoticons.Add(_rule.playerEmoticonBank.SampleBySize(SizeType.Long));
+            _playerEmoticons.MMShuffle();
             await _view.AsyncFillPlayerEmoticons(token, _playerEmoticons, _remainingEmoticons);
         }
 

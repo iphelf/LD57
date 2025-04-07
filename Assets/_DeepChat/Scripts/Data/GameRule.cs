@@ -57,6 +57,9 @@ namespace _DeepChat.Scripts.Data
 
         [Header("语料投放")] public EmoticonBank playerEmoticonBank;
         public int maxEmoticonCountInHand = 8;
+        public int initialShortEmoticonCount = 4;
+        public int initialMediumEmoticonCount = 3;
+        public int initialLongEmoticonCount = 1;
         public int maxEmotionCountInDeck = 30;
         public float shortBaseWeight = 4.5f;
         public float mediumBaseWeight = 4.0f;
