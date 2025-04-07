@@ -52,3 +52,13 @@ MonoBehaviour:
     emotion: 1
   - content: "\u200D(\u252C\u252C\uFE4F\u252C\u252C)\u200D(\u252C\u252C\uFE4F\u252C\u252C)"
     emotion: 2
+  - content: ".\uFF65\uFF9F\uFF9F\uFF65(\uFF0F\u03C9\uFF3C)\uFF65\uFF9F\uFF9F\uFF65."
+    emotion: 2
+  - content: "\uFF61\uFF65\uFF9F\uFF9F*(>\u0434<)*\uFF9F\uFF9F\uFF65\uFF61"
+    emotion: 2
+  - content: ".\uFF61\uFF65\uFF9F\uFF9F\uFF65(\uFF1E_\uFF1C)\uFF65\uFF9F\uFF9F\uFF65\uFF61."
+    emotion: 2
+  - content: "\uFF5E(^\u0437^)-\u2606\uFF5E(^\u0437^)-\u2606\uFF5E"
+    emotion: 1
+  - content: "(*\xB0\u25BD\xB0*)(*\xB0\u25BD\xB0*)(*\xB0\u25BD\xB0*)(*\xB0\u25BD\xB0*)"
+    emotion: 1
