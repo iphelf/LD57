@@ -67,16 +67,15 @@ namespace _DeepChat.Scripts.Logic
                 await _view.AsyncPresentNewScore(_score, _rule.minScoreForHappyEnd);
 
                 if (_score >= _rule.minScoreForHappyEnd)
-                {
                     return true;
-                }
 
-                if (_score <= _rule.maxScoreForBadEnd || _playerEmoticons.Count + _remainingEmoticons <= 0)
-                {
+                if (_score <= _rule.maxScoreForBadEnd)
                     return false;
-                }
 
                 await AsyncRefillPlayerEmoticons(token);
+
+                if (_playerEmoticons.Count + _remainingEmoticons <= 0)
+                    return false;
             }
 
             token.ThrowIfCancellationRequested();
@@ -93,20 +92,23 @@ namespace _DeepChat.Scripts.Logic
                 _playerEmoticons.Add(emoticon);
             }
 
-            await _view.AsyncRefreshPlayerEmoticons(token, _playerEmoticons, _remainingEmoticons);
+            await _view.AsyncFillPlayerEmoticons(token, _playerEmoticons, _remainingEmoticons);
         }
 
         private async Awaitable AsyncRefillPlayerEmoticons(CancellationToken token)
         {
-            while (_remainingEmoticons > 0 && _playerEmoticons.Count < _rule.maxEmoticonCountInHand)
+            List<Emoticon> refilledEmoticons = new();
+            while (_remainingEmoticons > 0 &&
+                   _playerEmoticons.Count + refilledEmoticons.Count < _rule.maxEmoticonCountInHand)
             {
                 --_remainingEmoticons;
                 var emoticon = _rule.SampleEmoticon(
                     sizeType => _playerEmoticons.Any(e => e.size == sizeType));
-                _playerEmoticons.Add(emoticon);
+                refilledEmoticons.Add(emoticon);
             }
 
-            await _view.AsyncRefreshPlayerEmoticons(token, _playerEmoticons, _remainingEmoticons);
+            _playerEmoticons.AddRange(refilledEmoticons);
+            await _view.AsyncAppendPlayerEmoticons(token, refilledEmoticons, _remainingEmoticons);
         }
 
         private static EmotionType GetEmotion(IEnumerable<EmotionType> emotionTypes)

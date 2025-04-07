@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 6660313472795831222}
   - component: {fileID: 4649304674936535438}
   - component: {fileID: 3177237831698738492}
+  - component: {fileID: 6302161650698464809}
   - component: {fileID: 7823989372005809113}
   m_Layer: 5
   m_Name: SendButton
@@ -313,6 +314,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6302161650698464809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754566991690581284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29ecba53c834877b251f253c712c7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectable: {fileID: 3177237831698738492}
+  overrideDisabledStateSprite: {fileID: 21300000, guid: edaee5fdedb4a964b9109626c0fac596, type: 3}
 --- !u!114 &7823989372005809113
 MonoBehaviour:
   m_ObjectHideFlags: 0

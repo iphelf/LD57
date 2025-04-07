@@ -10,9 +10,13 @@ namespace _DeepChat.Scripts.ViewCtrls
     {
         [SerializeField] private Toggle toggle;
         [SerializeField] private TMP_Text text;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private Sprite busySprite;
+        [SerializeField] private string busyStr;
 
         public Emoticon Content { get; private set; }
         public event Action CheckStateChanged;
+        public bool IsVisible { get; private set; } = true;
 
         private void Awake()
         {
@@ -25,9 +29,29 @@ namespace _DeepChat.Scripts.ViewCtrls
             text.text = emoticon.content;
         }
 
+        public void SetBusy()
+        {
+            text.text = busyStr;
+            toggle.image.sprite = busySprite;
+            toggle.interactable = false;
+        }
+
+        public void SetVisible(bool visible)
+        {
+            IsVisible = visible;
+            canvasGroup.alpha = visible ? 1 : 0;
+            canvasGroup.interactable = visible;
+            canvasGroup.blocksRaycasts = visible;
+        }
+
         public bool IsChecked()
         {
             return toggle.isOn;
+        }
+
+        public void SetUnchecked()
+        {
+            toggle.isOn = false;
         }
 
         private void OnToggleValueChanged(bool isOn)

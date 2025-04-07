@@ -28,7 +28,21 @@ namespace _DeepChat.Scripts.ViewCtrls
             return _emoticons.Where(v => v.IsChecked()).Select(v => v.Content);
         }
 
-        public void SetEmoticons(IEnumerable<Emoticon> emoticons)
+        public bool HasAnySelectedEmoticons()
+        {
+            return _emoticons.Any(v => v.IsChecked());
+        }
+
+        public void RemoveSelectedEmoticons()
+        {
+            foreach (var emoticonViewCtrl in _emoticons.Where(v => v.IsChecked()))
+            {
+                emoticonViewCtrl.SetUnchecked();
+                emoticonViewCtrl.SetVisible(false);
+            }
+        }
+
+        public void FillEmoticons(IEnumerable<Emoticon> emoticons)
         {
             Clear();
 
@@ -40,6 +54,25 @@ namespace _DeepChat.Scripts.ViewCtrls
                 view.CheckStateChanged += SelectionStateChangedByUser;
                 _emoticons.Add(view);
             }
+        }
+
+        public void AppendEmoticons(IEnumerable<Emoticon> emoticons)
+        {
+            var index = 0;
+            foreach (var emoticon in emoticons)
+            {
+                while (index < _emoticons.Count && _emoticons[index].IsVisible)
+                    ++index;
+                _emoticons[index].SetContent(emoticon);
+                _emoticons[index].SetVisible(true);
+            }
+
+            for (; index < _emoticons.Count; ++index)
+                if (!_emoticons[index].IsVisible)
+                {
+                    _emoticons[index].SetBusy();
+                    _emoticons[index].SetVisible(true);
+                }
         }
 
         [Button]

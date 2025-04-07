@@ -52,8 +52,8 @@ namespace _DeepChat.Scripts.Data
         }
 
         [Header("通关控制")] public int initialScore = 50;
-        public int minScoreForHappyEnd = 0;
-        public int maxScoreForBadEnd = 100;
+        public int minScoreForHappyEnd = 100;
+        public int maxScoreForBadEnd;
 
         [Header("语料投放")] public EmoticonBank playerEmoticonBank;
         public int maxEmoticonCountInHand = 8;

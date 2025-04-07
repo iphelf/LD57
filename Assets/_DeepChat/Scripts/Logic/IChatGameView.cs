@@ -13,7 +13,8 @@ namespace _DeepChat.Scripts.Logic
         public Awaitable AsyncPlayerSendMessage(CancellationToken token, [CanBeNull] string messageContent);
         public Awaitable AsyncPresentTurnResult(CancellationToken token, TurnActionResult actionResult, Rating rating);
         public Awaitable AsyncPresentNewScore(int newScore, int maxScore);
-        public Awaitable AsyncRefreshPlayerEmoticons(CancellationToken token, List<Emoticon> emoticons, int newPower);
+        public Awaitable AsyncFillPlayerEmoticons(CancellationToken token, List<Emoticon> emoticons, int newPower);
+        public Awaitable AsyncAppendPlayerEmoticons(CancellationToken token, List<Emoticon> emoticons, int newPower);
 
         public float GetMessageWidthDifference();
     }

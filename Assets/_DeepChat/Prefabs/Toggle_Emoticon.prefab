@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: The serve  r is busy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b32fbc1587c58047ae9547233850ae3, type: 2}
   m_sharedMaterial: {fileID: -998599309830665073, guid: 9b32fbc1587c58047ae9547233850ae3, type: 2}
@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 798171882259732213}
   - component: {fileID: 3660634644303244657}
   - component: {fileID: 1766309326082003814}
+  - component: {fileID: 2500945610766776327}
   m_Layer: 5
   m_Name: Toggle_Emoticon
   m_TagString: Untagged
@@ -193,6 +194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggle: {fileID: 3678228659069919002}
   text: {fileID: 6421752479937746385}
+  canvasGroup: {fileID: 2500945610766776327}
+  busySprite: {fileID: 21300000, guid: 5bff59c0776ed104d8fef59de1374b79, type: 3}
+  busyStr: The serve  r is busy
 --- !u!114 &3678228659069919002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +321,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2500945610766776327
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890612988141152880}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3365571648214130524
 GameObject:
   m_ObjectHideFlags: 0

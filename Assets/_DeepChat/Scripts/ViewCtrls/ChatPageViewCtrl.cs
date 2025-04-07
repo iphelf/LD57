@@ -63,9 +63,8 @@ namespace _DeepChat.Scripts.ViewCtrls
                 var goodResult = await game.Run(destroyCancellationToken, gameRule, this);
                 endingDialog.OpenEnding(goodResult);
             }
-            catch (Exception e)
+            catch (OperationCanceledException)
             {
-                Debug.Log($"{nameof(ChatPageViewCtrl)} error: {e}");
             }
         }
 
@@ -75,6 +74,10 @@ namespace _DeepChat.Scripts.ViewCtrls
             inputField.SetAsBlockingInput();
 
             var result = success ? emoticons.GetSelectedEmoticons().ToList() : null;
+            if (success)
+            {
+                emoticons.RemoveSelectedEmoticons();
+            }
 
             var waitingPlayerAction = _waitingPlayerAction;
             _waitingPlayerAction = null;
@@ -96,6 +99,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         {
             var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
             inputField.SetContent(selectedEmoticons);
+            sendButton.interactable = selectedEmoticons.Length > 0;
         }
 
         public void Reset()
@@ -110,11 +114,22 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable<List<Emoticon>> AsyncWaitForPlayerAction(CancellationToken token, float maxWaitSeconds)
         {
-            inputField.SetAsHintingInput();
+            if (emoticons.HasAnySelectedEmoticons())
+            {
+                inputField.SetContent(emoticons.GetSelectedEmoticons().ToArray());
+                sendButton.interactable = true;
+            }
+            else
+            {
+                inputField.SetAsHintingInput();
+                sendButton.interactable = false;
+            }
+
             _waitingPlayerAction = new AwaitableCompletionSource<List<Emoticon>>();
             countdown.StartCountdown(maxWaitSeconds, () => FinishPlayerAction(false));
             await messages.AsyncScrollToBottom(token);
             var selectedEmoticons = await _waitingPlayerAction.Awaitable;
+            sendButton.interactable = false;
             return selectedEmoticons;
         }
 
@@ -139,10 +154,17 @@ namespace _DeepChat.Scripts.ViewCtrls
             score.UpdateScore(newScore, maxScore);
         }
 
-        public async Awaitable AsyncRefreshPlayerEmoticons(
+        public async Awaitable AsyncFillPlayerEmoticons(
             CancellationToken token, List<Emoticon> newEmoticons, int newPower)
         {
-            emoticons.SetEmoticons(newEmoticons);
+            emoticons.FillEmoticons(newEmoticons);
+            power.SetValue(newPower);
+        }
+
+        public async Awaitable AsyncAppendPlayerEmoticons(
+            CancellationToken token, List<Emoticon> newEmoticons, int newPower)
+        {
+            emoticons.AppendEmoticons(newEmoticons);
             power.SetValue(newPower);
         }
 
