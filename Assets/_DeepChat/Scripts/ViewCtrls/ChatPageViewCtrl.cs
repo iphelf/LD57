@@ -114,7 +114,7 @@ namespace _DeepChat.Scripts.ViewCtrls
                 inputField.SetAsBlockingInput();
             else
                 inputField.SetAsHintingInput();
-            sendButton.interactable = selectedEmoticons.Length > 0;
+            sendButton.interactable = _waitingPlayerAction != null && selectedEmoticons.Length > 0;
         }
 
         public void Reset()
