@@ -37,12 +37,12 @@ MonoBehaviour:
   - key: 8
     sfx: {fileID: 8300000, guid: 914743f6558cc004f96b31f0416f7ef9, type: 3}
   - key: 9
-    sfx: {fileID: 8300000, guid: c3718180f1375d040b08e3656360fbdd, type: 3}
+    sfx: {fileID: 8300000, guid: 1b49fd6e880d54e43b3ede1491cbd778, type: 3}
   - key: 10
     sfx: {fileID: 8300000, guid: b63f3eb7a9950414587ca1a4ea3a3076, type: 3}
   - key: 11
     sfx: {fileID: 8300000, guid: 070fe51327490e2428cc0775a4b622b8, type: 3}
   - key: 12
-    sfx: {fileID: 8300000, guid: 46e72d872184df44d923477df5da10dc, type: 3}
+    sfx: {fileID: 8300000, guid: 292465855a343e440a44e3c4e25b797e, type: 3}
   - key: 13
     sfx: {fileID: 8300000, guid: 3a565d9920b8124429c6e36c3be0d410, type: 3}
