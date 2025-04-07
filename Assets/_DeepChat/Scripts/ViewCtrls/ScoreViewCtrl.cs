@@ -12,20 +12,20 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public UnityEvent OnScoreChanged;
 
-        private int _lastScore;
+        private int _score;
 
         public void UpdateScore(int score, int maxScore, bool skipAnim = false)
         {
             text.text = $"{score}/{maxScore}";
-            if (_lastScore == score)
+            if (_score == score)
                 return;
-            _lastScore = score;
+            var lastScore = _score;
+            _score = score;
             if (skipAnim)
                 return;
 
-            AudioManager.PlaySfx(_lastScore < score ? SfxKey.ScoreIncrease : SfxKey.ScoreDecrease);
+            AudioManager.PlaySfx(lastScore < score ? SfxKey.ScoreIncrease : SfxKey.ScoreDecrease);
             OnScoreChanged?.Invoke();
-            _lastScore = score;
         }
     }
 }

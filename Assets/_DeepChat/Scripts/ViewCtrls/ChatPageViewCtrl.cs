@@ -98,13 +98,21 @@ namespace _DeepChat.Scripts.ViewCtrls
         private void OnPlayerEmoticonSelectionChanged()
         {
             var selectedEmoticons = emoticons.GetSelectedEmoticons().ToArray();
-            inputField.SetContent(selectedEmoticons);
+            if (selectedEmoticons.Length > 0)
+                inputField.SetContent(selectedEmoticons);
+            else if (_waitingPlayerAction == null)
+                inputField.SetAsBlockingInput();
+            else
+                inputField.SetAsHintingInput();
             sendButton.interactable = selectedEmoticons.Length > 0;
         }
 
         public void Reset()
         {
             messages.Clear();
+            inputField.SetAsBlockingInput();
+            countdown.StopCountdown();
+            sendButton.interactable = false;
         }
 
         public async Awaitable AsyncNpcSendMessage(CancellationToken token, Message message)
@@ -130,6 +138,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             await messages.AsyncScrollToBottom(token);
             var selectedEmoticons = _waitingPlayerAction == null ? null : await _waitingPlayerAction.Awaitable;
             sendButton.interactable = false;
+            inputField.SetAsBlockingInput();
             return selectedEmoticons;
         }
 

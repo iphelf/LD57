@@ -45,6 +45,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncAppendPlayerMessage(CancellationToken token, string message)
         {
+            await Awaitable.WaitForSecondsAsync(0.25f, token);
             var go = Instantiate(playerMessagePrefab, listRoot);
             var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
@@ -151,8 +152,12 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             if (makeM1SemiTransparent)
                 m2.transform.SetSiblingIndex(m1.transform.GetSiblingIndex());
+            indicator.GetCanvasGroup().alpha = 0.0f;
 
             var goID = gameObject.GetInstanceID();
+
+            const float delayDuration = 0.5f;
+            await Awaitable.WaitForSecondsAsync(delayDuration, token);
 
             const float joinDuration = 1.0f;
             if (makeM1SemiTransparent)
@@ -160,7 +165,6 @@ namespace _DeepChat.Scripts.ViewCtrls
             var targetY = (m1OriginalY + m2OriginalY) * 0.5f;
             m1Transform.DOLocalMoveY(targetY, joinDuration).SetId(goID).Play();
             m2Transform.DOLocalMoveY(targetY, joinDuration).SetId(goID).Play();
-            indicator.GetCanvasGroup().alpha = 0.0f;
             await Awaitable.WaitForSecondsAsync(joinDuration, token);
 
             const float indicateDuration = 1.0f;

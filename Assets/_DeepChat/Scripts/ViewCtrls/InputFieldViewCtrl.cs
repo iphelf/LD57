@@ -10,7 +10,11 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private TMP_Text text;
         [SerializeField] private string hintingInputStr;
         [SerializeField] private string blockingInputStr;
-        [SerializeField] private string busyStr;
+
+        public void Clear()
+        {
+            text.text = string.Empty;
+        }
 
         public void SetContent(Emoticon[] newEmoticons)
         {
@@ -32,11 +36,6 @@ namespace _DeepChat.Scripts.ViewCtrls
         public void SetAsBlockingInput()
         {
             text.text = blockingInputStr;
-        }
-
-        public void SetAsBusy()
-        {
-            text.text = busyStr;
         }
     }
 }
