@@ -20,6 +20,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private GameObject playerBusyMessagePrefab;
         [SerializeField] private GameObject npcMessagePrefab;
         [SerializeField] private GameObject ratingMessagePrefab;
+        [SerializeField] private GameObject waitingMessagePrefab;
 
         [Header("匹配")] [SerializeField] private GameObject perfectMatchIndicatorPrefab;
         [SerializeField] private GameObject goodMismatchIndicatorPrefab;
@@ -28,9 +29,17 @@ namespace _DeepChat.Scripts.ViewCtrls
         [Header("宽度匹配计算")] [SerializeField] private LayoutGroup targetReference;
         [SerializeField] private float targetWidthCorrection;
 
+        [Header("时间控制")] [SerializeField] private float playerMessageDelayDuration = 0.25f;
+        [SerializeField] private float npcMessagePrepareDuration = 2.0f;
+        [SerializeField] private float matchDelayDuration = 0.5f;
+        [SerializeField] private float matchJoinDuration = 1.0f;
+        [SerializeField] private float matchIndicateDuration = 1.0f;
+        [SerializeField] private float matchSeparateDuration = 1.0f;
+
         [Header("Config")] [SerializeField] private bool clearOnAwake = true;
 
         [SerializeField, ReadOnly] private List<TextMessageViewCtrl> messages;
+        private GameObject _waitingMessage;
 
         private void Awake()
         {
@@ -45,7 +54,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncAppendPlayerMessage(CancellationToken token, string message)
         {
-            await Awaitable.WaitForSecondsAsync(0.25f, token);
+            await Awaitable.WaitForSecondsAsync(playerMessageDelayDuration, token);
             var go = Instantiate(playerMessagePrefab, listRoot);
             var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
@@ -63,7 +72,17 @@ namespace _DeepChat.Scripts.ViewCtrls
 
         public async Awaitable AsyncAppendNpcMessage(CancellationToken token, string message)
         {
-            await Awaitable.WaitForSecondsAsync(1.0f, token);
+            if (_waitingMessage)
+            {
+                _waitingMessage.transform.SetAsLastSibling();
+                _waitingMessage.SetActive(true);
+            }
+            else
+                _waitingMessage = Instantiate(waitingMessagePrefab, listRoot);
+
+            await Awaitable.WaitForSecondsAsync(npcMessagePrepareDuration, token);
+            _waitingMessage.SetActive(false);
+
             var go = Instantiate(npcMessagePrefab, listRoot);
             var messageViewCtrl = go.GetComponent<TextMessageViewCtrl>();
             messageViewCtrl.SetContent(message);
@@ -156,28 +175,24 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             var goID = gameObject.GetInstanceID();
 
-            const float delayDuration = 0.5f;
-            await Awaitable.WaitForSecondsAsync(delayDuration, token);
+            await Awaitable.WaitForSecondsAsync(matchDelayDuration, token);
 
-            const float joinDuration = 1.0f;
             if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(0.8f, joinDuration).SetId(goID).Play();
+                m1.GetCanvasGroup().DOFade(0.8f, matchJoinDuration).SetId(goID).Play();
             var targetY = (m1OriginalY + m2OriginalY) * 0.5f;
-            m1Transform.DOLocalMoveY(targetY, joinDuration).SetId(goID).Play();
-            m2Transform.DOLocalMoveY(targetY, joinDuration).SetId(goID).Play();
-            await Awaitable.WaitForSecondsAsync(joinDuration, token);
+            m1Transform.DOLocalMoveY(targetY, matchJoinDuration).SetId(goID).Play();
+            m2Transform.DOLocalMoveY(targetY, matchJoinDuration).SetId(goID).Play();
+            await Awaitable.WaitForSecondsAsync(matchJoinDuration, token);
 
-            const float indicateDuration = 1.0f;
-            indicator.GetCanvasGroup().DOFade(1.0f, indicateDuration * 0.5f).SetId(goID).Play();
+            indicator.GetCanvasGroup().DOFade(1.0f, matchIndicateDuration * 0.5f).SetId(goID).Play();
             AudioManager.PlaySfx(sfxKey);
-            await Awaitable.WaitForSecondsAsync(indicateDuration, token);
+            await Awaitable.WaitForSecondsAsync(matchIndicateDuration, token);
 
-            const float separateDuration = 1.0f;
             if (makeM1SemiTransparent)
-                m1.GetCanvasGroup().DOFade(1.0f, separateDuration).SetId(goID).Play();
-            m1Transform.DOLocalMoveY(m1OriginalY, separateDuration).SetId(goID).Play();
-            m2Transform.DOLocalMoveY(m2OriginalY, separateDuration).SetId(goID).Play();
-            await Awaitable.WaitForSecondsAsync(separateDuration, token);
+                m1.GetCanvasGroup().DOFade(1.0f, matchSeparateDuration).SetId(goID).Play();
+            m1Transform.DOLocalMoveY(m1OriginalY, matchSeparateDuration).SetId(goID).Play();
+            m2Transform.DOLocalMoveY(m2OriginalY, matchSeparateDuration).SetId(goID).Play();
+            await Awaitable.WaitForSecondsAsync(matchSeparateDuration, token);
 
             if (makeM1SemiTransparent)
                 m1.transform.SetSiblingIndex(m2.transform.GetSiblingIndex());
@@ -231,6 +246,7 @@ namespace _DeepChat.Scripts.ViewCtrls
 
             for (var i = listRoot.childCount - 1; i >= 0; --i)
                 Destroy(listRoot.GetChild(i).gameObject);
+            _waitingMessage = null;
         }
     }
 }
