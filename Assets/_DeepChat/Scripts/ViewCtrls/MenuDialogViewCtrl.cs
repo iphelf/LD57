@@ -10,6 +10,7 @@ namespace _DeepChat.Scripts.ViewCtrls
         [SerializeField] private GameObject content;
         [SerializeField] private Button helpButton;
         [SerializeField] private Button exitButton;
+        [SerializeField] private Button closeButton;
 
         public event Action OnHelpButtonClicked;
         public event Action OnExitButtonClicked;
@@ -19,6 +20,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             toggle.onValueChanged.AddListener(OnToggleValueChanged);
             helpButton.onClick.AddListener(OnHelpButtonClick);
             exitButton.onClick.AddListener(OnExitButtonClick);
+            closeButton.onClick.AddListener(OnCloseButtonClick);
         }
 
         private void OnToggleValueChanged(bool value)
@@ -36,6 +38,11 @@ namespace _DeepChat.Scripts.ViewCtrls
         {
             toggle.isOn = false;
             OnExitButtonClicked?.Invoke();
+        }
+
+        private void OnCloseButtonClick()
+        {
+            toggle.isOn = false;
         }
     }
 }
