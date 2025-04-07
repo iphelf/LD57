@@ -59,8 +59,8 @@ namespace _DeepChat.Scripts.ViewCtrls
         {
             try
             {
-                var game = new ChatGame();
-                var goodResult = await game.Run(destroyCancellationToken, gameRule, this);
+                var game = new ChatGame(gameRule, this);
+                var goodResult = await game.Run(destroyCancellationToken);
                 endingDialog.OpenEnding(goodResult);
             }
             catch (OperationCanceledException)
@@ -128,7 +128,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             _waitingPlayerAction = new AwaitableCompletionSource<List<Emoticon>>();
             countdown.StartCountdown(maxWaitSeconds, () => FinishPlayerAction(false));
             await messages.AsyncScrollToBottom(token);
-            var selectedEmoticons = await _waitingPlayerAction.Awaitable;
+            var selectedEmoticons = _waitingPlayerAction == null ? null : await _waitingPlayerAction.Awaitable;
             sendButton.interactable = false;
             return selectedEmoticons;
         }

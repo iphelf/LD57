@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _DeepChat.Scripts.Common;
 using _DeepChat.Scripts.Logic;
 using JetBrains.Annotations;

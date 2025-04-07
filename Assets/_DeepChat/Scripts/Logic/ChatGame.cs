@@ -9,24 +9,28 @@ namespace _DeepChat.Scripts.Logic
 {
     public class ChatGame
     {
-        private GameRule _rule;
-        private IChatGameView _view;
+        private readonly GameRule _rule;
+        private readonly IChatGameView _view;
 
         private int _score;
-        private MessageSampler _npcMessageSampler;
-        private readonly List<Emoticon> _playerEmoticons = new();
+        private readonly MessageSampler _npcMessageSampler;
+        private readonly List<Emoticon> _playerEmoticons;
         private int _remainingEmoticons;
 
-        public async Awaitable<bool> Run(CancellationToken token, GameRule rule, IChatGameView view)
+        public ChatGame(GameRule rule, IChatGameView view)
         {
             _rule = rule;
             _view = view;
 
             _npcMessageSampler = new MessageSampler(_rule.npcMessageBank);
+            _playerEmoticons = new List<Emoticon>();
             _remainingEmoticons = rule.maxEmotionCountInDeck;
-
-            _view.Reset();
             _score = _rule.initialScore;
+        }
+
+        public async Awaitable<bool> Run(CancellationToken token)
+        {
+            _view.Reset();
 
             await _view.AsyncPresentNewScore(_score, _rule.minScoreForHappyEnd);
             await AsyncFillPlayerEmoticons(token);
@@ -36,7 +40,9 @@ namespace _DeepChat.Scripts.Logic
                 var message = _npcMessageSampler.Sample();
                 await _view.AsyncNpcSendMessage(token, message);
 
-                var selectedEmoticons = await _view.AsyncWaitForPlayerAction(token, _rule.npcMaxWaitDuration);
+                // var waitDuration = _rule.npcMaxWaitDuration - (1.0f * _score / _rule.minScoreForHappyEnd - 0.5f) * 42;
+                var waitDuration = _rule.npcMaxWaitDuration;
+                var selectedEmoticons = await _view.AsyncWaitForPlayerAction(token, waitDuration);
                 if (selectedEmoticons == null)
                 {
                     await _view.AsyncPlayerSendMessage(token, null);
@@ -95,15 +101,15 @@ namespace _DeepChat.Scripts.Logic
         {
             List<Emoticon> refilledEmoticons = new();
             while (_remainingEmoticons > 0 &&
-                   _playerEmoticons.Count + refilledEmoticons.Count < _rule.maxEmoticonCountInHand)
+                   _playerEmoticons.Count < _rule.maxEmoticonCountInHand)
             {
                 --_remainingEmoticons;
                 var emoticon = _rule.SampleEmoticon(
                     sizeType => _playerEmoticons.Any(e => e.size == sizeType));
                 refilledEmoticons.Add(emoticon);
+                _playerEmoticons.Add(emoticon);
             }
 
-            _playerEmoticons.AddRange(refilledEmoticons);
             await _view.AsyncAppendPlayerEmoticons(token, refilledEmoticons, _remainingEmoticons);
         }
 
