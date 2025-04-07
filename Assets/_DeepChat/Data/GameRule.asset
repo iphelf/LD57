@@ -17,7 +17,7 @@ MonoBehaviour:
   perfectMatchScore: 20
   goodMatchScore: 10
   badMatchScore: -10
-  terribleMatchScore: -15
+  terribleMatchScore: -20
   emotionBonusMatchScore: 3
   initialScore: 50
   minScoreForHappyEnd: 100
