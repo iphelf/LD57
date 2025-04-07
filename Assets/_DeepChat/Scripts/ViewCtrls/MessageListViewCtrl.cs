@@ -80,6 +80,7 @@ namespace _DeepChat.Scripts.ViewCtrls
             else
                 _waitingMessage = Instantiate(waitingMessagePrefab, listRoot);
 
+            await AsyncScrollToBottom(token);
             await Awaitable.WaitForSecondsAsync(npcMessagePrepareDuration, token);
             _waitingMessage.SetActive(false);
 
