@@ -16,7 +16,9 @@ MonoBehaviour:
   sfxVolume: 1
   musicList:
   - key: 1
-    music: {fileID: 8300000, guid: fd5d58d34a590dc4ab62d1a4497be699, type: 3}
+    music: {fileID: 8300000, guid: 288facf0ad047fb4b9c52cce89a8f8ea, type: 3}
+  - key: 2
+    music: {fileID: 8300000, guid: 020a60a824baed64193fc7050073e19e, type: 3}
   sfxList:
   - key: 1
     sfx: {fileID: 8300000, guid: 264b7cf768b37164f8fdf542e8f61172, type: 3}
@@ -41,6 +43,6 @@ MonoBehaviour:
   - key: 11
     sfx: {fileID: 8300000, guid: 070fe51327490e2428cc0775a4b622b8, type: 3}
   - key: 12
-    sfx: {fileID: 8300000, guid: 3bfb087831bdaa946bbc6cf00bf50f8b, type: 3}
+    sfx: {fileID: 8300000, guid: 46e72d872184df44d923477df5da10dc, type: 3}
   - key: 13
     sfx: {fileID: 8300000, guid: 3a565d9920b8124429c6e36c3be0d410, type: 3}

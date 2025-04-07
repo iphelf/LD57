@@ -13,10 +13,5 @@ namespace _DeepChat.Scripts.Systems
         {
             AudioManager.Initialize(audioConfig, sfxAudioSource, bgmAudioSource);
         }
-
-        private void Start()
-        {
-            AudioManager.PlayMusic(MusicKey.DefaultBGM);
-        }
     }
 }

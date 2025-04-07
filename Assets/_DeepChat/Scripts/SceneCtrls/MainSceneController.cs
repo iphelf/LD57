@@ -1,4 +1,6 @@
-﻿using _DeepChat.Scripts.ViewCtrls;
+﻿using _DeepChat.Scripts.Data;
+using _DeepChat.Scripts.Systems;
+using _DeepChat.Scripts.ViewCtrls;
 using UnityEngine;
 
 namespace _DeepChat.Scripts.SceneCtrls
@@ -16,12 +18,22 @@ namespace _DeepChat.Scripts.SceneCtrls
             titlePage.OnCreditsButtonClicked += TransitionFromTitleToCredits;
         }
 
+        private void Start()
+        {
+            AudioManager.PlayMusic(MusicKey.TitleBGM);
+        }
+
         private void TransitionFromTitleToChat()
         {
             titlePage.gameObject.SetActive(false);
             var go = Instantiate(chatPagePrefab, pageRoot);
             var chatPage = go.GetComponent<ChatPageViewCtrl>();
-            chatPage.OnClose += () => titlePage.gameObject.SetActive(true);
+            AudioManager.PlayMusic(MusicKey.GameBGM);
+            chatPage.OnClose += () =>
+            {
+                AudioManager.PlayMusic(MusicKey.TitleBGM);
+                titlePage.gameObject.SetActive(true);
+            };
         }
 
         private void TransitionFromTitleToCredits()

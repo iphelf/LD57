@@ -25,7 +25,8 @@ namespace _DeepChat.Scripts.Data
     public enum MusicKey
     {
         None = 0,
-        DefaultBGM = 1,
+        TitleBGM = 1,
+        GameBGM = 2,
     }
 
     [CreateAssetMenu(menuName = "SO/AudioConfig", fileName = "AudioConfig")]
